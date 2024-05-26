@@ -33,13 +33,22 @@ namespace islandCart.client
         protected global::System.Web.UI.WebControls.TextBox ln;
 
         /// <summary>
-        /// useremail control.
+        /// userEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox useremail;
+        protected global::System.Web.UI.WebControls.TextBox userEmail;
+
+        /// <summary>
+        /// lblEmailErr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEmailErr;
 
         /// <summary>
         /// pwd control.
@@ -49,6 +58,15 @@ namespace islandCart.client
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox pwd;
+
+        /// <summary>
+        /// RegularExpressionValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator1;
 
         /// <summary>
         /// btnregister control.

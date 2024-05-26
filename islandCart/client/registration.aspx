@@ -1,6 +1,23 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Customer.Master" AutoEventWireup="true" CodeBehind="registration.aspx.cs" Inherits="islandCart.client.registration" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script>
+    function togglePasswordVisibility(element) {
+    var target = $(element).attr('toggle');
+    var passwordField = $(target);
+
+        if (passwordField.attr('type') === 'password') {
+            passwordField.attr('type', 'text');
+            element.classList.remove('mdi-eye-outline');
+            element.classList.add('mdi-eye-off-outline');
+        } else {
+            passwordField.attr('type', 'password');
+            element.classList.remove('mdi-eye-off-outline');
+            element.classList.add('mdi-eye-outline');
+        }
+    }
+    </script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -31,42 +48,74 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-input">
-                                            <asp:TextBox runat="server" placeholder="First Name" ID="fn"></asp:TextBox>
+                                            <asp:TextBox runat="server" placeholder="Firstname" ID="fn"></asp:TextBox>
                                             
                                             <i class="mdi mdi-account"></i>
-                                            <asp:RequiredFieldValidator runat="server" display="Dynamic" ControlToValidate="fn" ErrorMessage="Required Field*" cssClass="text-danger"></asp:RequiredFieldValidator>
+                                            <asp:RequiredFieldValidator runat="server" display="Dynamic" ControlToValidate="fn" ErrorMessage="*" cssClass="text-danger"></asp:RequiredFieldValidator>
                                         </div>
+                                         <asp:RegularExpressionValidator 
+                                             runat="server" 
+                                             ErrorMessage="Invalid Firstname"
+                                             ControlToValidate="fn"
+                                             display="Dynamic"
+                                             cssClass="text-danger"
+                                             ValidationExpression="^[a-zA-Z]+$">
+
+                                         </asp:RegularExpressionValidator>
                                     </div>
+                                   
                                     <div class="col-sm-6">
                                         <div class="form-input form">
-                                              <asp:TextBox runat="server" placeholder="Last Name" ID="ln"></asp:TextBox>
-                                            
+                                              <asp:TextBox runat="server" placeholder="Lastname" ID="ln"></asp:TextBox>
+                                              <asp:RequiredFieldValidator runat="server" display="Dynamic" ControlToValidate="ln" ErrorMessage="*" cssClass="text-danger"></asp:RequiredFieldValidator>
                                         </div>
+                                            <asp:RegularExpressionValidator 
+                                                runat="server" 
+                                                ErrorMessage="Invalid Lastname"
+                                                ControlToValidate="ln"
+                                                display="Dynamic"
+                                                cssClass="text-danger"
+                                                ValidationExpression="^[a-zA-Z]+$">
+
+                                            </asp:RegularExpressionValidator>
+
                                     </div>
+                                     
                                 </div>
                             </div>
                             <div class="single-form form-default form-border">
                                 <label>Email Address</label>
                                 <div class="form-input">
-                                     <asp:TextBox runat="server" placeholder="user@email.com" ID="useremail"></asp:TextBox>
+                                     <asp:TextBox runat="server" placeholder="user@email.com" ID="userEmail"></asp:TextBox>
                                   
                                     <i class="mdi mdi-email"></i>
+                                      <asp:RequiredFieldValidator runat="server" display="Dynamic" ControlToValidate="useremail" ErrorMessage="*" cssClass="text-danger"></asp:RequiredFieldValidator>
                                 </div>
+
+                                <asp:Label  runat="server" ID="lblEmailErr" CssClass="text-danger" visible="false"/>
                             </div>
                             <div class="single-form form-default form-border">
                                 <label>Choose Password</label>
                                 <div class="form-input">
-                                 <%--   <input
-                                        id="password-1"
-                                        type="password"
-                                        placeholder="Password" />--%>
+                               
                                     <asp:TextBox runat="server" ID="pwd" placeholder="password" TextMode="Password"></asp:TextBox>
-                                    <i class="mdi mdi-lock"></i>
-                                    <span
-                                        toggle="#password-1"
-                                        class="mdi mdi-eye-outline toggle-password"></span>
+                                    <i class="mdi mdi-lock"
+                                       ></i>
+                                    <span toggle="#<%= pwd.ClientID %>"
+                                        class="mdi mdi-eye-outline toggle-password"
+                                        onclick="togglePasswordVisibility(this)"  style="cursor:pointer;"></span>
                                 </div>
                             </div>
+                            <asp:RegularExpressionValidator 
+                                ID="RegularExpressionValidator1" 
+                                runat="server" 
+                                ErrorMessage="Password should 8 length and one uppercase or lowercase" 
+                                ControlToValidate="pwd"
+                                ValidationExpression="^(?=.*[a-z])(?=.*[A-Z]).{8,}$"
+                                display="Dynamic"
+                                cssClass="text-danger"
+                                ></asp:RegularExpressionValidator>
+
                             <div class="single-checkbox checkbox-style-3">
                                 <input type="checkbox" id="login-1" />
                                 <label for="login-1"><span></span></label>

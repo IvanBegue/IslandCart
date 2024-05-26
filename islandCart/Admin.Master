@@ -1,0 +1,291 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin.master.cs" Inherits="islandCart.Admin" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <!-- Fav  Icon Link -->
+	<link rel="shortcut icon" type="image/png" href="images/fav.png">
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="/assets/adminAssets/css/bootstrap.min.css">
+	<!-- themify icons CSS -->
+	<link rel="stylesheet" href="/assets/adminAssets/css/themify-icons.css">
+	<!-- Animations CSS -->
+	<link rel="stylesheet" href="/assets/adminAssets/css/animate.css">
+	<!-- Main CSS -->
+	<link rel="stylesheet" href="/assets/adminAssets/css/styles.css">
+	<link rel="stylesheet" href="/assets/adminAssets/css/red.css" id="style_theme">
+	<link rel="stylesheet" href="/assets/adminAssets/css/responsive.css">
+	<!-- morris charts -->
+	<link rel="stylesheet" href="/assets/adminAssets/charts/css/morris.css">
+	<!-- jvectormap -->
+	<link rel="stylesheet" href="/assets/adminAssets/css/jquery-jvectormap.css">
+
+	<link rel="icon" type="image/png" href="/assets/images/Admin-favicon.png"/>
+
+	<script src="/assets/adminAssets/js/modernizr.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+ <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/blitzer/jquery-ui.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css">
+<%--	<!-- Start of HubSpot Embed Code -->
+  <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/144648272.js"></script>
+<!-- End of HubSpot Embed Code -->--%>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+		 <asp:ScriptManager runat="server">
+             <Scripts>
+                 <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%> <%--Framework Scripts--%>
+                 <asp:ScriptReference Name="MsAjaxBundle" />
+                 <asp:ScriptReference Name="jquery" />
+                 <%--<asp:ScriptReference Name="bootstrap" />--%>
+                 <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                 <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                 <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                 <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                 <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                 <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                 <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                 <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                 <asp:ScriptReference Name="WebFormsBundle" />
+                 <%--Site Scripts--%>
+             </Scripts>
+    </asp:ScriptManager>
+
+		<!-- Pre Loader -->
+	<div class="loading">
+		<div class="spinner">
+			<div class="double-bounce1"></div>
+			<div class="double-bounce2"></div>
+		</div>
+	</div>
+	<!--/Pre Loader -->
+        <!-- /Color Changer -->
+	<div class="wrapper">
+		<!-- Sidebar -->
+		<nav id="sidebar" class="lorvens-bg">
+			<div class="sidebar-header text-center">
+				<asp:Image runat="server" ImageUrl="~/assets/images/logo.svg" AlternateText="Cart" width="110px"/>
+			</div>
+			<ul class="list-unstyled components">
+				<li class="active">
+					<a href="#nav-dashboard" data-toggle="collapse" aria-expanded="true">
+						<span class="ti-home"></span> Dashboard
+					</a>
+					<ul class="collapse list-unstyled show" id="nav-dashboard">
+						<li>
+							<asp:HyperLink runat="server" Text="Home" NavigateUrl="~/admin/panel.aspx"></asp:HyperLink>
+						
+						</li>
+					</ul>
+				</li>
+				<li class="nav-level-one">
+					<a href="#nav-uiKit" data-toggle="collapse" aria-expanded="false">
+						<span class="ti-shopping-cart-full"></span> Manage Product
+					</a>
+					<ul class="list-unstyled collapse" aria-expanded="true" id="nav-uiKit">
+						<li>
+							<asp:HyperLink runat="server" Text="New Product" NavigateUrl="~/admin/addproduct.aspx"></asp:HyperLink>
+							<asp:HyperLink runat="server" Text="All Products" NavigateUrl="~/admin/listproduct.aspx" ></asp:HyperLink>
+						</li>
+						<%--<li>
+							<asp:HyperLink runat="server" Text="" ></asp:HyperLink>
+						</li>--%>
+					
+					
+					</ul>
+				</li>
+				
+				<li>
+					<a href="#nav-charts" data-toggle="collapse" aria-expanded="false">
+						<span class="ti-layout-grid3"></span> Manage Category
+					</a>
+					<ul class="collapse list-unstyled" id="nav-charts">
+						<li>
+							<asp:HyperLink runat="server" NavigateUrl="~/admin/category.aspx" Text="New Category"></asp:HyperLink>
+							
+						</li>
+						
+					</ul>
+				</li>
+				<li>
+					<a href="#nav-maps" data-toggle="collapse" aria-expanded="false">
+						<span class="ti-view-grid"></span> Manage Sub Category
+					</a>
+					<ul class="collapse list-unstyled" id="nav-maps">
+						
+						<li>
+							<asp:HyperLink runat="server" NavigateUrl="~/admin/subcategory.aspx" Text="New SubCategory">
+
+							</asp:HyperLink>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#nav-FlashSale" data-toggle="collapse" aria-expanded="false">
+									<span class="ti-announcement"></span> Manage Flashsale
+					</a>
+					<ul class="collapse list-unstyled" id="nav-FlashSale">
+									<li>
+										<asp:HyperLink runat="server" NavigateUrl="~/admin/addFlashsale.aspx" Text="Create Flashsale">
+
+</asp:HyperLink>
+									</li>
+									
+					</ul>
+				</li>
+				<li>
+					<a href="#nav-user" data-toggle="collapse" aria-expanded="false">
+									<span class="ti-user"></span> Manage User
+					</a>
+					<ul class="collapse list-unstyled" id="nav-user">
+									<li>
+										<asp:HyperLink runat="server" NavigateUrl="~/admin/createuser.aspx" Text="Create User"/>
+									</li>
+									
+					</ul>
+				</li>
+				<li>
+				<a href="#nav-Review" data-toggle="collapse" aria-expanded="false">
+								<span class="ti-star"></span> Manage Reviews
+				</a>
+				<ul class="collapse list-unstyled" id="nav-Review">
+								<li>
+									<asp:HyperLink runat="server" NavigateUrl="~/admin/allreviews.aspx" Text="View Review"/>
+								</li>
+								
+				</ul>
+				</li>
+				<li>
+				<a href="#nav-Discount" data-toggle="collapse" aria-expanded="false">
+					<span class="ti-stats-down"></span> Manage Discount
+				</a>
+				<ul class="collapse list-unstyled" id="nav-Discount">
+					<li>
+						<asp:HyperLink runat="server" NavigateUrl="~/admin/adddiscount.aspx" Text="Create Discount"/>
+					</li>
+					
+				</ul>
+				</li>
+				<li>
+					<a href="#nav-icons" data-toggle="collapse" aria-expanded="false">
+						<span class="ti-layers-alt"></span> Product Variants
+					</a>
+					<ul class="collapse list-unstyled" id="nav-icons">
+						<li>
+							<asp:HyperLink runat="server" NavigateUrl="~/admin/brand.aspx" Text="Create Brand"/>
+						</li>
+						<li>
+							<asp:HyperLink runat="server" NavigateUrl="~/admin/color.aspx" Text="Create Color"/>
+						</li>
+					</ul>
+				</li>
+		
+			</ul>
+			
+		</nav>
+		<!-- /Sidebar -->
+		<!-- Page Content -->
+		<div id="content">
+			<!-- Top Navigation -->
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<span class="ti-menu" id="sidebarCollapse"></span>
+					</div>
+					<ul class="nav justify-content-end">
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="modal" data-target=".lorvens-modal-lg">
+								<span class="ti-search"></span>
+							</a>
+							<div class="modal fade lorvens-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+								<div class="modal-dialog modal-lorvens">
+									<div class="modal-content lorvens-box-shadow">
+										<div class="modal-header">
+											<h5 class="modal-title">Serach Client/Project:</h5>
+											<span class="ti-close" data-dismiss="modal" aria-label="Close">
+											</span>
+										</div>
+										<div class="modal-body">
+											
+												<div class="form-group">
+													<input type="text" class="form-control" id="search-term" placeholder="Type text here">
+													<button type="button" class="btn btn-lorvens lorvens-bg">
+														<span class="ti-location-arrow"></span> Search</button>
+												</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+						
+						<li class="nav-item">
+							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+								<span class="ti-user"></span>
+							</a>
+							<div class="dropdown-menu lorvens-box-shadow profile animated flipInY">
+								<h5>
+									<asp:Label runat="server" cssClass="text-capitalize" ID="lblFnName"></asp:Label>
+
+								</h5>
+								<a class="dropdown-item" href="/admin/updateprofile.aspx">
+									<span class="ti-settings"></span> Settings</a>
+								<%--<a class="dropdown-item" href="#">
+									<span class="ti-help-alt"></span> Help</a>--%>
+								<a class="dropdown-item" href="/admin/signOut.aspx">
+									<span class="ti-power-off"></span> Logout</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<!-- Top Navigation -->
+			<main>
+			
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        
+
+			</main>
+			
+
+		</div>
+		<!-- /Page Content -->
+	</div>
+	
+	<a id="back-to-top" href="#" class="back-to-top">
+			<span class="ti-angle-up"></span>
+	</a>
+	
+
+
+
+	<!-- Jquery Library-->
+	<script src="/assets/adminAssets/js/jquery-3.2.1.min.js"></script>
+		
+	<!-- Popper Library-->
+	<script src="/assets/adminAssets/js/popper.min.js"></script>
+	<!-- Bootstrap Library-->
+	<script src="/assets/adminAssets/js/bootstrap.min.js"></script>
+	<!-- morris charts -->
+	<script src="/assets/adminAssets/charts/js/raphael-min.js"></script>
+	<script src="/assets/adminAssets/charts/js/morris.min.js"></script>
+	<script src="/assets/adminAssets/js/custom-morris.js"></script>
+	<!-- jvectormap -->
+	<script src="/assets/adminAssets/js/jquery-jvectormap.min.js"></script>
+	<script src="/assets/adminAssets/js/jquery-jvectormap-world-mill.js"></script>
+	<script src="/assets/adminAssets/js/custom-vector.js"></script>
+	<!-- Custom Script-->
+	<script src="/assets/adminAssets/js/custom.js"></script>
+	
+        
+    </form>
+</body>
+</html>

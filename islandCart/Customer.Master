@@ -1,0 +1,1008 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Customer.master.cs" Inherits="islandCart.Customer" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title><%:Page.Title %> - Island Cart</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+
+    <link rel="stylesheet" href="/assets/css/slick.css" />
+
+    <link rel="stylesheet" href="/assets/css/slick-theme.css"/>
+
+    <!--====== Line Icons CSS ======-->
+    <link rel="stylesheet" href="/assets/css/LineIcons.css" />
+
+    <!--====== Material Design Icons CSS ======-->
+    <link rel="stylesheet" href="/assets/css/materialdesignicons.min.css" />
+
+    <!--====== Bootstrap CSS ======-->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+
+     <!--====== Jquery Ui CSS ======-->
+    <link rel="stylesheet" href="/assets/css/jquery-ui.min.css" />
+
+    <!--====== gLightBox CSS ======-->
+
+    <link rel="stylesheet" href="/assets/css/glightbox.min.css" />
+
+    <!--====== nouiSlider CSS ======-->
+    <link rel="stylesheet" href="/assets/css/nouislider.min.css" />
+
+    <!--====== Default CSS ======-->
+    <link rel="stylesheet" href="/assets/css/default.css" />
+
+    <!--====== Style CSS ======-->
+    <link rel="stylesheet" href="/assets/css/style.css" />
+
+     <!--====== Tiny Slider CSS ======-->
+      <link rel="stylesheet" href="/assets/css/tiny-slider.css" />
+
+     <!--====== nice select CSS ======-->
+    <link rel="stylesheet" href="/assets/css/nice-select.css" />
+
+    <link rel="icon" type="image/png" href="/assets/images/favicon-32x32.png"/>
+
+</head>
+<body>
+    
+    <form id="form1" runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+               <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <%--<asp:ScriptReference Name="bootstrap" />--%>
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+        <header class="menu-style-4 menu-dark-4 position-relative ">
+
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-12 position-static">
+                        <div class="navbar-container ">
+                            <!-- menu top Start -->
+                            <div class="menu-top-area d-lg-flex justify-content-between">
+                                <!-- menu top left Start -->
+                                <div class="menu-top-left">
+                                    <ul class="menu-top-link">
+                                        <li>
+                                            <asp:HyperLink NavigateUrl="~/client/testimonials.aspx" runat="server" Text="Reviews"/>
+                                        </li>
+                                        <li><a href="#0">Help</a></li>
+                                        <li><a href="#0">Contact</a></li>
+                                    </ul>
+                                </div>
+                                <!-- menu top left Ends -->
+                                 
+                                <div class="logo d-lg-block text-center text-lg-left">
+                                    <a href="index.aspx">
+                                        <asp:Image runat="server" ImageUrl="~/assets/images/logo.svg" AlternateText="Cart" width="110px"/>
+                                       
+                                    </a>
+                                </div> 
+                                <!-- logo Ends -->
+                                <!-- menu top right Start -->
+                                <div class="menu-top-right">
+                                    <ul class="menu-top-link">
+                                        <li>
+                                            <div class="select-position">
+                                                <select id="select14">
+                                                    <option value="0" selected>Rs MUR</option>
+                                                    <option value="1">€ EURO</option>
+                                                    <option value="2">$ USD</option>
+                                                    <option value="3">₹ INR</option>
+                                                    <option value="4">¥ CNY</option>
+                                                    <option value="5">৳ BDT</option>
+                                                </select>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <asp:Panel runat="server" ID="pnlDefault" Visible="true">
+
+                                                <asp:HyperLink runat="server" NavigateUrl="~/client/login.aspx">
+                                        <i class="mdi mdi-account"></i>
+                                        Login
+                                                </asp:HyperLink>
+
+                                            </asp:Panel>
+                                        </li>
+
+
+
+                                        <asp:Panel runat="server" ID="pnllogin" Visible="false">
+                                            <li>
+                                                <div class="navbar-user dropdown">
+                                                    <a
+                                                        class="icon-btn primary-icon-text icon-text-btn"
+                                                        href="#dropdownProfile"
+                                                        role="button"
+                                                        data-bs-toggle="dropdown"><i class="mdi mdi-account"></i>
+                                                        <asp:Label runat="server" ID="lblfn" CssClass="text-capitalize"></asp:Label></a>
+                                                    <ul class="dropdown-menu " id="dropdownProfile">
+                                                        <li>
+                                                            <asp:HyperLink NavigateUrl="~/client/dashboard.aspx" runat="server" CssClass="text-secondary">
+                                         <i class="mdi mdi-account "></i> My Profile</asp:HyperLink>
+                                                        </li>
+
+                                                        <li>
+                                                            <a href="#0" class="text-secondary"><i class="mdi mdi-bell"></i>Notifications</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="logout.aspx" class="text-secondary"><i class="mdi mdi-import"></i>Logout</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </asp:Panel>
+
+                                    </ul>
+                                </div>
+                                <!-- menu top right Ends -->
+                            </div>
+                            <!-- menu top Ends -->
+
+                            <!-- main menu Start -->
+                            <nav
+                                class="
+                        main-navbar
+                        d-lg-flex
+                        justify-content-between
+                        align-items-center
+                    ">
+                                <!-- navbar menu Start -->
+                                <div class="navbar-menu">
+                                    <div class="navbar-menu-toggle d-lg-block">
+                                        <button type="button"
+                                            id="toggle-menu-4"
+                                            class="menu-toggle collapsed"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#menuVertical4-1"
+                                            aria-controls="menuVertical4-1"
+                                            aria-expanded="false"
+                                            aria-label="Toggle navigation">
+                                            <span class="toggle-icon"></span>
+                                            <span class="toggle-icon"></span>
+                                            <span class="toggle-icon"></span>
+                                        </button>
+                                    </div>
+
+                                    <ul
+                                        class="main-menu menu-vertical-4 collapse"
+                                        id="menuVertical4-1">
+                                        <li class="menu-item-has-children">
+                                            <a
+                                                href="#0"
+                                                class="collapsed"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#menuVertical4-2"
+                                                aria-controls="menuVertical4-2"
+                                                aria-expanded="false"
+                                                aria-label="Toggle navigation">Arts & Crafts <i class="mdi mdi-chevron-right"></i></a>
+
+                                            <!-- sub mega dropdown Start -->
+                                            <ul
+                                                class="sub-mega-dropdown collapse"
+                                                id="menuVertical4-2">
+                                                <li>
+                                                    <div class="mega-dropdown-menu">
+                                                        <ul
+                                                            class="container mega-dropdown d-flex flex-wrap">
+                                                            <li
+                                                                class="
+                                        mega-dropdown-list
+                                        menu-item-has-children
+                                    ">
+                                                                <h6
+                                                                    class="
+                                        heading-6
+                                        font-weight-500
+                                        mega-title
+                                        collapsed
+                                        "
+                                                                    data-bs-toggle="collapse"
+                                                                    data-bs-target="#menuVertical4-3"
+                                                                    aria-controls="menuVertical4-3"
+                                                                    aria-expanded="false"
+                                                                    aria-label="Toggle navigation">New Arrivals
+                                        <i class="mdi mdi-chevron-right"></i>
+                                                                </h6>
+                                                                <ul class="collapse" id="menuVertical4-3">
+                                                                    <li><a href="#0">Dressess</a></li>
+                                                                    <li><a href="#0">Jackets</a></li>
+                                                                    <li>
+                                                                        <a href="#0">Hoodies & Sweatshirts</a>
+                                                                    </li>
+                                                                    <li><a href="#0">Sweaters</a></li>
+                                                                    <li><a href="#0">Tops & Tees</a></li>
+                                                                    <li><a href="#0">Party Dressess</a></li>
+                                                                </ul>
+                                                            </li>
+                                                            <li
+                                                                class="
+                                        mega-dropdown-list
+                                        menu-item-has-children
+                                    ">
+                                                                <h6
+                                                                    class="
+                                        heading-6
+                                        font-weight-500
+                                        mega-title
+                                        collapsed
+                                        "
+                                                                    data-bs-toggle="collapse"
+                                                                    data-bs-target="#menuVertical4-4"
+                                                                    aria-controls="menuVertical4-4"
+                                                                    aria-expanded="false"
+                                                                    aria-label="Toggle navigation">Trending
+                                        <i class="mdi mdi-chevron-right"></i>
+                                                                </h6>
+                                                                <ul class="collapse" id="menuVertical4-4">
+                                                                    <li><a href="#0">Dressess</a></li>
+                                                                    <li><a href="#0">Jackets</a></li>
+                                                                    <li>
+                                                                        <a href="#0">Hoodies & Sweatshirts</a>
+                                                                    </li>
+                                                                    <li><a href="#0">Sweaters</a></li>
+                                                                    <li><a href="#0">Tops & Tees</a></li>
+                                                                    <li><a href="#0">Party Dressess</a></li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="mega-dropdown-list">
+                                                                <div class="d-md-flex d-lg-block">
+                                                                    <div class="menu-image">
+                                                                        <img
+                                                                            src="assets/images/menu-1.jpg"
+                                                                            alt="" />
+                                                                    </div>
+                                                                    <div class="menu-image">
+                                                                        <img
+                                                                            src="assets/images/menu-2.jpg"
+                                                                            alt="" />
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <!-- sub mega dropdown Ends -->
+                                        </li>
+                                        <li class="menu-item-has-children">
+                                            <a
+                                                href="#0"
+                                                class="collapsed"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#menuVertical4-5"
+                                                aria-controls="menuVertical4-5"
+                                                aria-expanded="false"
+                                                aria-label="Toggle navigation">Fashion <i class="mdi mdi-chevron-right"></i></a>
+
+                                            <!-- sub mega dropdown Start -->
+                                            <ul
+                                                class="sub-mega-dropdown collapse"
+                                                id="menuVertical4-5">
+                                                <li>
+                                                    <div class="mega-dropdown-menu">
+                                                        <ul
+                                                            class="container mega-dropdown d-flex flex-wrap">
+                                                            <li
+                                                                class="
+                                        mega-dropdown-list
+                                        menu-item-has-children
+                                    ">
+                                                                <h6
+                                                                    class="
+                                        heading-6
+                                        font-weight-500
+                                        mega-title
+                                        collapsed
+                                        "
+                                                                    data-bs-toggle="collapse"
+                                                                    data-bs-target="#menuVertical4-6"
+                                                                    aria-controls="menuVertical4-6"
+                                                                    aria-expanded="false"
+                                                                    aria-label="Toggle navigation">New Arrivals
+                                        <i class="mdi mdi-chevron-right"></i>
+                                                                </h6>
+                                                                <ul class="collapse" id="menuVertical4-6">
+                                                                    <li><a href="#0">Dressess</a></li>
+                                                                    <li><a href="#0">Jackets</a></li>
+                                                                    <li>
+                                                                        <a href="#0">Hoodies & Sweatshirts</a>
+                                                                    </li>
+                                                                    <li><a href="#0">Sweaters</a></li>
+                                                                    <li><a href="#0">Tops & Tees</a></li>
+                                                                    <li><a href="#0">Party Dressess</a></li>
+                                                                </ul>
+                                                            </li>
+                                                            <li
+                                                                class="
+                                        mega-dropdown-list
+                                        menu-item-has-children
+                                    ">
+                                                                <h6
+                                                                    class="
+                                        heading-6
+                                        font-weight-500
+                                        mega-title
+                                        collapsed
+                                        "
+                                                                    data-bs-toggle="collapse"
+                                                                    data-bs-target="#menuVertical4-7"
+                                                                    aria-controls="menuVertical4-7"
+                                                                    aria-expanded="false"
+                                                                    aria-label="Toggle navigation">Trending
+                                        <i class="mdi mdi-chevron-right"></i>
+                                                                </h6>
+                                                                <ul class="collapse" id="menuVertical4-7">
+                                                                    <li><a href="#0">Dressess</a></li>
+                                                                    <li><a href="#0">Jackets</a></li>
+                                                                    <li>
+                                                                        <a href="#0">Hoodies & Sweatshirts</a>
+                                                                    </li>
+                                                                    <li><a href="#0">Sweaters</a></li>
+                                                                    <li><a href="#0">Tops & Tees</a></li>
+                                                                    <li><a href="#0">Party Dressess</a></li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="mega-dropdown-list">
+                                                                <div class="d-md-flex d-lg-block">
+                                                                    <div class="menu-image">
+                                                                        <img
+                                                                            src="assets/images/menu-1.jpg"
+                                                                            alt="" />
+                                                                    </div>
+                                                                    <div class="menu-image">
+                                                                        <img
+                                                                            src="assets/images/menu-2.jpg"
+                                                                            alt="" />
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <!-- sub mega dropdown Ends -->
+                                        </li>
+                                        <li>
+                                            <a href="#0">Health & Household
+                            <i class="mdi mdi-chevron-right"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="#0">Bages & Shoes <i class="mdi mdi-chevron-right"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="#0">Jewelry & Watchs <i class="mdi mdi-chevron-right"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="#0">Beauty & Health <i class="mdi mdi-chevron-right"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="#0">Electronics <i class="mdi mdi-chevron-right"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="#0">Home & Garden <i class="mdi mdi-chevron-right"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- navbar menu Ends -->
+
+                                <!-- navbar menu Start -->
+                                <ul class="main-menu-horizontal d-none d-lg-flex">
+                                    <li class="position-static menu-item-has-children">
+                                        <a
+                                            
+                                            href="#0"
+                                            class="collapsed text-light"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#menuVertical4-8"
+                                            aria-controls="menuVertical4-8"
+                                            aria-expanded="false"
+                                            aria-label="Toggle navigation">Womens</a>
+
+                                        <!-- sub mega dropdown Start -->
+                                        <ul
+                                            class="sub-mega-dropdown collapse"
+                                            id="menuVertical4-8">
+                                            <li>
+                                                <div class="mega-dropdown-menu">
+                                                    <ul
+                                                        class="container mega-dropdown d-flex flex-wrap">
+                                                        <li
+                                                            class="
+                                    mega-dropdown-list
+                                    menu-item-has-children
+                                    ">
+                                                            <h6
+                                                                class="
+                                        heading-6
+                                        font-weight-500
+                                        mega-title
+                                        collapsed
+                                    "
+                                                                data-bs-toggle="collapse"
+                                                                data-bs-target="#menuVertical4-9"
+                                                                aria-controls="menuVertical4-9"
+                                                                aria-expanded="false"
+                                                                aria-label="Toggle navigation">New Arrivals
+                                                            </h6>
+                                                            <ul class="collapse" id="menuVertical4-9">
+                                                                <li><a href="#0">Dressess</a></li>
+                                                                <li><a href="#0">Jackets</a></li>
+                                                                <li>
+                                                                    <a href="#0">Hoodies & Sweatshirts</a>
+                                                                </li>
+                                                                <li><a href="#0">Sweaters</a></li>
+                                                                <li><a href="#0">Tops & Tees</a></li>
+                                                                <li><a href="#0">Party Dressess</a></li>
+                                                            </ul>
+                                                        </li>
+                                                        <li
+                                                            class="
+                                    mega-dropdown-list
+                                    menu-item-has-children
+                                    ">
+                                                            <h6
+                                                                class="
+                                        heading-6
+                                        font-weight-500
+                                        mega-title
+                                        collapsed
+                                    "
+                                                                data-bs-toggle="collapse"
+                                                                data-bs-target="#menuVertical4-10"
+                                                                aria-controls="menuVertical4-10"
+                                                                aria-expanded="false"
+                                                                aria-label="Toggle navigation">Trending
+                                                            </h6>
+                                                            <ul class="collapse" id="menuVertical4-10">
+                                                                <li><a href="#0">Dressess</a></li>
+                                                                <li><a href="#0">Jackets</a></li>
+                                                                <li>
+                                                                    <a href="#0">Hoodies & Sweatshirts</a>
+                                                                </li>
+                                                                <li><a href="#0">Sweaters</a></li>
+                                                                <li><a href="#0">Tops & Tees</a></li>
+                                                                <li><a href="#0">Party Dressess</a></li>
+                                                            </ul>
+                                                        </li>
+                                                        <li
+                                                            class="
+                                    mega-dropdown-list
+                                    menu-item-has-children
+                                    ">
+                                                            <h6
+                                                                class="
+                                        heading-6
+                                        font-weight-500
+                                        mega-title
+                                        collapsed
+                                    "
+                                                                data-bs-toggle="collapse"
+                                                                data-bs-target="#menuVertical4-11"
+                                                                aria-controls="menuVertical4-11"
+                                                                aria-expanded="false"
+                                                                aria-label="Toggle navigation">Accessories
+                                                            </h6>
+                                                            <ul class="collapse" id="menuVertical4-11">
+                                                                <li>
+                                                                    <a href="#0">Hoodies & Sweatshirts</a>
+                                                                </li>
+                                                                <li><a href="#0">Jackets & Coats</a></li>
+                                                                <li><a href="#0">Pants</a></li>
+                                                                <li><a href="#0">Jeans</a></li>
+                                                                <li><a href="#0">Tops & Tees</a></li>
+                                                                <li><a href="#0">Casual Shorts</a></li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="mega-dropdown-list">
+                                                            <img
+                                                                src="assets/images/menu-slider-1.png"
+                                                                alt="" />
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <!-- sub mega dropdown Ends -->
+                                    </li>
+                                    <li><a href="#0">mens</a></li>
+                                    <li><a href="#0">Kids</a></li>
+                                    <li><a href="#0">Accessories</a></li>
+                                    <li class="menu-item-has-children">
+                                        <a
+                                            href="#0"
+                                            class="collapsed"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#menuVertical4-12"
+                                            aria-controls="menuVertical4-12"
+                                            aria-expanded="false"
+                                            aria-label="Toggle navigation">More</a>
+                                        <!-- sub menu Start -->
+                                        <ul class="sub-menu collapse" id="menuVertical4-12">
+                                            <li>
+                                                <asp:HyperLink NavigateUrl="~/client/allproducts.aspx" runat="server" Text="All Products"/>
+                                            </li>
+                                            <%--<li class="menu-item-has-children">
+                                                <a
+                                                    href="#0"
+                                                    class="collapsed"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#menuVertical4-13"
+                                                    aria-controls="menuVertical4-13"
+                                                    aria-expanded="false"
+                                                    aria-label="Toggle navigation">Dropped Menu 2 <i class="mdi mdi-chevron-right"></i></a>
+                                                <ul class="sub-menu collapse" id="menuVertical4-13">
+                                                    <li><a href="#0">Sub Dropped Menu 1</a></li>
+                                                    <li><a href="#0">Sub Dropped Menu 2</a></li>
+                                                    <li><a href="#0">Sub Dropped Menu 3</a></li>
+                                                    <li class="menu-item-has-children">
+                                                        <a
+                                                            href="#0"
+                                                            class="collapsed"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#menuVertical4-14"
+                                                            aria-controls="menuVertical4-14"
+                                                            aria-expanded="false"
+                                                            aria-label="Toggle navigation">Sub Dropped Menu 4
+                                    <i class="mdi mdi-chevron-right"></i></a>
+                                                        <ul
+                                                            class="sub-menu collapse"
+                                                            id="menuVertical4-14">
+                                                            <li><a href="#0">Sub Dropped Menu 1</a></li>
+                                                            <li><a href="#0">Sub Dropped Menu 2</a></li>
+                                                            <li><a href="#0">Sub Dropped Menu 3</a></li>
+                                                            <li><a href="#0">Sub Dropped Menu 4</a></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#0">Dropped Menu 3</a></li>
+                                            <li><a href="#0">Dropped Menu 4</a></li>--%>
+                                        </ul>
+                                        <!-- sub menu Ends -->
+                                    </li>
+                                </ul>
+                                <!-- navbar menu Ends -->
+
+                                <div
+                                    class="
+                        navbar-search-cart
+                        d-none d-lg-flex
+                        justify-content-end
+                        ">
+                                    <!-- navbar search start -->
+                                    <div class="navbar-search search-dark search-style-5">
+                                       
+                                        <div class="search-input">
+                                            <asp:TextBox runat="server" ID="txtNavSearch" placeholder="search"></asp:TextBox>
+                                            
+                                        </div>
+                                        <div class="search-btn">
+                                            <asp:LinkButton ID="btnNavSearch" runat="server" cssClass="btn btn-secondary" OnClick="btnNavSearch_Click" >
+                                                <i class="lni lni-search-alt"></i>
+                                            </asp:LinkButton>
+                                           
+                                        </div>
+                                    </div>
+                                    <!-- navbar search Ends -->
+                                    <!-- navbar cart start -->
+                                    <div class="navbar-cart">
+                                        <a
+                                            class="icon-btn primary-icon-text icon-text-btn"
+                                            href="#0">
+                                            <asp:Image runat="server" ImageUrl="~/assets/images/icon-svg/cart-4.svg" AlternateText="cart" />
+
+                                            <span class="icon-text text-style-1">
+                                                <asp:Label ID="lblCountCart" runat="server" /></span></a>
+                                        <asp:Panel runat="server" ID="pnlcart" Visible="false">
+                                        <div class="navbar-cart-dropdown">
+                                            <div
+                                                class="
+                                checkout-style-2 checkout-style-dark-2
+                                text-start
+                            ">
+                                                <div
+                                                    class="
+                                checkout-header
+                                d-flex
+                                justify-content-between
+                                ">
+                                                    <h6 class="title">Shopping Cart</h6>
+                                                </div>
+
+                                                <div class="checkout-table">
+                                                    <table class="table">
+                                                        <tbody>
+                                                            <asp:Repeater runat="server" ID="rptCart" OnItemCommand="rptCart_ItemCommand">
+                                                                <ItemTemplate>
+                                                                    <tr>
+                                                                        <td class="checkout-product">
+                                                                            <div class="product-cart d-flex">
+                                                                                <div class="product-thumb">
+                                                                                    <img
+                                                                                        src="/assets/images/product/product-1.jpg"
+                                                                                        alt="Product" />
+                                                                                </div>
+                                                                                <div class="product-content media-body">
+                                                                                    <h5 class="title">
+                                                                                        <a href="#0"><%#Eval ("product_name") %></a>
+                                                                                    </h5>
+                                                                                    <ul>
+                                                                                        <li><span>Brown</span></li>
+                                                                                        <li><span>XL</span></li>
+                                                                                        <li>
+                                                                                          
+                                                                                           <asp:LinkButton runat="server" CssClass="delete" CommandName="DeleteItem" CommandArgument='<%#Eval("product_id") %>'>
+                                                                                    <i class="mdi mdi-delete"></i>
+                                                                            </asp:LinkButton>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td class="checkout-quantity">
+                                                                            <div class="product-quantity d-inline-flex">
+                                                                                <button
+                                                                                    type="button"
+                                                                                    id="sub"
+                                                                                    class="sub">
+                                                                                    <i class="mdi mdi-minus"></i>
+                                                                                </button>
+                                                                                <input type="text" value="1" />
+                                                                                <button
+                                                                                    type="button"
+                                                                                    id="add"
+                                                                                    class="add">
+                                                                                    <i class="mdi mdi-plus"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td class="checkout-price">
+                                                                            <p class="price">Rs <%#Eval ("product_price") %></p>
+                                                                        </td>
+                                                                    </tr>
+                                                                </ItemTemplate>
+                                                            </asp:Repeater>
+
+
+
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                                <div class="checkout-footer">
+                                                    <div
+                                                        class="
+                                    checkout-sub-total
+                                    d-flex
+                                    justify-content-between
+                                ">
+                                                        <p class="value">Subotal Price:</p>
+                                                        <p class="price"><asp:Label runat="server" ID="lblCartSum"></asp:Label></p>
+                                                    </div>
+                                                    <div class="checkout-btn">
+                                                        <a
+                                                            href="/client/shoppingcart.aspx"
+                                                            class="main-btn secondary-1-btn-border">View Cart</a>
+                                                        <a href="#0" class="main-btn secondary-1-btn">Checkout</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                            </asp:Panel>
+                                    </div>
+                                    <!-- navbar cart Ends -->
+                                </div>
+                            </nav>
+                            <!-- main navbar Ends -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+        <main>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </main>
+
+
+        <footer>
+            <section class="footer-style-5 footer-dark-style-5 mt-50 pt-70 pb-100">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="footer-about mt-30">
+                                <a href="#0">
+                                    <asp:Image runat="server" ImageUrl="~/assets/images/logo.svg" AlternateText="Cart" width="110px"/>
+                                </a>
+                                <p>
+                                    Made with ❤️ by <a href="#0">Ivan</a>. All rights
+                        reserved.
+                                </p>
+                                <ul class="footer-social">
+                                    <li>
+                                        <a href="#0"><i class="lni lni-facebook-filled"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="#0"><i class="lni lni-twitter-filled"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="#0"><i class="lni lni-linkedin-original"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="#0"><i class="lni lni-instagram-original"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="#0"><i class="lni lni-whatsapp"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="footer-link-widget">
+                                <div class="footer-link">
+                                    <h5 class="footer-title">My Account</h5>
+
+                                    <ul class="link">
+                                        <li><a href="#0">Orders</a></li>
+                                        <li><a href="#0">Downloads</a></li>
+                                        <li><a href="#0">Addresses</a></li>
+                                        <li><a href="#0">Account details</a></li>
+                                        <li><a href="#0">Logout</a></li>
+                                    </ul>
+                                </div>
+                                <div class="footer-link">
+                                    <h5 class="footer-title">Information</h5>
+
+                                    <ul class="link">
+                                        <li><a href="#0">About Us</a></li>
+                                        <li><a href="#0">Contact Us</a></li>
+                                        <li><a href="#0">Downloads</a></li>
+                                        <li><a href="#0">Sitemap</a></li>
+                                        <li><a href="#0">FAQs Page</a></li>
+                                        <li><a href="#0">Comming Soon</a></li>
+                                        <li><a href="#0">404 Page</a></li>
+                                    </ul>
+                                </div>
+                                <div class="footer-link">
+                                    <h5 class="footer-title">Categories</h5>
+
+                                    <ul class="link">
+                                        <li><a href="#0">Outfit</a></li>
+                                        <li><a href="#0">Sunglassess</a></li>
+                                        <li><a href="#0">Watches</a></li>
+                                        <li><a href="#0">Bags</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="footer-widget-subscribe">
+                                <h5 class="footer-title">Stay in the loop</h5>
+                                <p>
+                                    Be the first to know when new products drop and get
+                        behind-the-scenes content straight.
+                                </p>
+
+                                <div class="subscribe-form">
+
+                                    <div class="single-form form-white">
+                                        <label>Enter your email address</label>
+                                        <div class="form-input">
+                                            <input type="text" placeholder="user@email.com" />
+                                            <i class="mdi mdi-account"></i>
+                                            <button class="main-btn secondary-1-btn">
+                                                <span class="mdi mdi-send"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </footer>
+    </form>
+
+
+
+    <!--====== Bootstrap js ======-->
+     <script src="/assets/js/bootstrap.min.js"></script>
+     <script src="/assets/js/bootstrap.bundle.min.js"></script>
+
+    <!--====== Tiny Slider js ======-->
+    <script src="/assets/js/tiny-slider.js"></script>
+
+    <!--====== noui Slider js ======-->
+    <script src="/assets/js/nouislider.min.js"></script>
+
+    <!--====== count up js ======-->
+    <script src="/assets/js/count-up.min.js"></script>
+
+    <!--====== gLightBox js ======-->
+    <script src="/assets/js/glightbox.min.js"></script>
+
+    <!--====== Main js ======-->
+    <script src="/assets/js/main.js"></script>
+
+
+    <script src="/assets/js/slick.js"></script>
+    <script src="/assets/js/slick.min.js"></script>
+
+
+
+        <!--====== formatter js ======-->
+    <script src="/assets/js/jquery.formatter.min.js"></script>
+    <script>
+
+
+        // ========= main-menu-dark 4  activation
+        let menuToggleDark4 = document.querySelector(".menu-dark-4 .menu-toggle");
+        menuToggleDark4.addEventListener("click", () => {
+            menuToggleDark4.classList.toggle("active");
+        });
+
+
+    </script>
+     <script>
+         //======== tiny slider for three-column-carousel
+         tns({
+             mouseDrag: true,
+             container: ".three-column-carousel",
+             nav: false,
+             controls: true,
+             center: true,
+             speed: 400,
+             controlsText: [
+                 '<i class="mdi mdi-chevron-left"></i>',
+                 '<i class="mdi mdi-chevron-right"></i>',
+             ],
+             responsive: {
+                 0: {
+                     items: 1,
+                 },
+                 575: {
+                     items: 2,
+                 },
+                 992: {
+                     items: 3,
+                 },
+             },
+         });
+
+
+         tns({
+             mouseDrag: true,
+             container: ".new-carousel",
+             controls: true,
+             nav: false,
+             center: true,
+             speed: 400,
+             controlsText: [
+                 '<i class="mdi mdi-chevron-left"></i>',
+                 '<i class="mdi mdi-chevron-right"></i>',
+             ],
+             responsive: {
+                 0: {
+                     items: 1,
+                 },
+                 575: {
+                     items: 2,
+                 },
+                 992: {
+                     items: 3,
+                 },
+             },
+         });
+         tns({
+             mouseDrag: true,
+             container: ".category-carousel",
+             nav: false,
+             controls: true,
+             center: true,
+             speed: 400,
+             controlsText: [
+                 '<i class="mdi mdi-chevron-left"></i>',
+                 '<i class="mdi mdi-chevron-right"></i>',
+             ],
+             responsive: {
+                 0: {
+                     items: 1,
+                 },
+                 575: {
+                     items: 2,
+                 },
+                 992: {
+                     items: 3,
+                 },
+             },
+         });
+
+     </script>
+    <script>
+        tns({
+            mouseDrag: true,
+            container: ".two-column-carousel",
+            nav: true,
+            controls: false,
+            // center: true,
+            speed: 400,
+            responsive: {
+                0: {
+                    items: 1,
+                },
+                992: {
+                    items: 2,
+                },
+            },
+        });
+    </script>
+   <script>
+       //======== tiny slider for testimonial-one
+
+
+       //======== tiny slider for testimonial-three
+       tns({
+           mouseDrag: true,
+           container: ".testimonial-style-3-active",
+           nav: true,
+           controls: true,
+           speed: 400,
+           items: 1,
+           controlsText: [
+               '<i class="mdi mdi-chevron-left"></i>',
+               '<i class="mdi mdi-chevron-right"></i>',
+           ],
+           responsive: {
+               0: {
+                   controls: false,
+               },
+               768: {
+                   controls: true,
+               },
+           },
+       });
+   </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.slider-for').slick({
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    arrows: false,
+                    fade: true,
+                    asNavFor: '.slider-nav'
+                });
+                $('.slider-nav').slick({
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    asNavFor: '.slider-for',
+                    dots: false,
+                    centerMode: true,
+                    focusOnSelect: true
+                });
+
+            });
+        </script>
+</body>
+</html>

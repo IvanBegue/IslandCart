@@ -138,6 +138,7 @@
     <Content Include="admin\login.aspx" />
     <Content Include="admin\newrole.aspx" />
     <Content Include="admin\panel.aspx" />
+    <Content Include="admin\productUnit.aspx" />
     <Content Include="admin\signOut.aspx" />
     <Content Include="admin\subcategory.aspx" />
     <Content Include="admin\subcategoryflashsale.aspx" />
@@ -259,6 +260,7 @@
     <Content Include="client\checkout.aspx" />
     <Content Include="client\confirmOtp.aspx" />
     <Content Include="client\dashboard.aspx" />
+    <Content Include="client\errorpage.aspx" />
     <Content Include="client\forgotpassword.aspx" />
     <Content Include="client\index.aspx" />
     <Content Include="client\login.aspx" />
@@ -475,6 +477,13 @@
     <Compile Include="admin\panel.aspx.designer.cs">
       <DependentUpon>panel.aspx</DependentUpon>
     </Compile>
+    <Compile Include="admin\productUnit.aspx.cs">
+      <DependentUpon>productUnit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="admin\productUnit.aspx.designer.cs">
+      <DependentUpon>productUnit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="admin\signOut.aspx.cs">
       <DependentUpon>signOut.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -553,6 +562,13 @@
     </Compile>
     <Compile Include="client\dashboard.aspx.designer.cs">
       <DependentUpon>dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="client\errorpage.aspx.cs">
+      <DependentUpon>errorpage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="client\errorpage.aspx.designer.cs">
+      <DependentUpon>errorpage.aspx</DependentUpon>
     </Compile>
     <Compile Include="client\forgotpassword.aspx.cs">
       <DependentUpon>forgotpassword.aspx</DependentUpon>

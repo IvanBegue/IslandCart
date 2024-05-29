@@ -452,6 +452,8 @@ namespace islandCart.admin
 
                             con.Close();
                         }
+
+
                     }
 
 
@@ -485,14 +487,18 @@ namespace islandCart.admin
                         
                          cmd.CommandText = "UPDATE productsize set quantity=@qnt WHERE size_id=@size AND product_id=@pid";
 
-                        cmd.Parameters.AddWithValue("@size", sizeId);
-                        cmd.Parameters.AddWithValue("@pid", pid);
-                        cmd.Parameters.AddWithValue("@qnt", txtSizeTotal.Text);
+                        cmd.Parameters.AddWithValue("@size",sizeId);
+                        cmd.Parameters.AddWithValue("@pid",pid);
+                        cmd.Parameters.AddWithValue("@qnt",txtSizeTotal.Text);
 
                         con.Open();
                         cmd.ExecuteNonQuery();
                         con.Close();
+
+
                     }
+
+
                 }
             }
 

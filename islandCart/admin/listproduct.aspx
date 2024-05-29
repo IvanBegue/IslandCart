@@ -26,7 +26,7 @@
                <h3 class="widget-title">List of Products</h3>
                    <div class="lorvens-widget">
                         <div class="table-div">
-                                <table class="table table-hover">
+                                <table class="table table-hover" id="gvs">
                                      <thead>
                                         <tr class="text-center">
                                             <th scope="col">#</th>

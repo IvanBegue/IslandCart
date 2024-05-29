@@ -31,6 +31,19 @@
  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/blitzer/jquery-ui.css">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css">
+
+ <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.css" />
+
+    <%--<link type="text/css"  href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css" rel="stylesheet" />--%>
+
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.7/datatables.min.js"></script>
+
+    <%--<script type="text/javascript" src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
+
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.colVis.min.js"></script>--%>
+
+
+
 <%--	<!-- Start of HubSpot Embed Code -->
   <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/144648272.js"></script>
 <!-- End of HubSpot Embed Code -->--%>
@@ -291,8 +304,8 @@
 	<script src="/assets/adminAssets/js/custom-vector.js"></script>
 	<!-- Custom Script-->
 	<script src="/assets/adminAssets/js/custom.js"></script>
-	
-        
+	  <script src='<%= ResolveClientUrl("~/Scripts/WebForms/dataTable.js") %>'></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.7/datatables.min.js"></script>
     </form>
 </body>
 </html>

@@ -31,26 +31,39 @@ namespace islandCart.client
         protected void btnregister_Click(object sender, EventArgs e)
         {
 
-            if (IsEmailFound())
+            try
             {
-                lblEmailErr.Visible = true;
-                lblEmailErr.Text = "Email already registed login instead";
+                if (IsEmailFound())
+                {
+                    lblEmailErr.Visible = true;
+                    lblEmailErr.Text = "Email already registed login instead";
 
+                }
+                else
+                {
+                    CreateAccount();
+
+                }
             }
-            else
+            catch
             {
-                CreateAccount();
+               
 
+                Response.Redirect("~/client/errorpage.aspx");
             }
+           
         }
 
 
         void CreateAccount()
         {
+
+            int lastCid;
+
             SqlConnection con = new SqlConnection(_conString);
             SqlCommand icmd = new SqlCommand();
-            icmd.Connection = con;
-            icmd.CommandText = "INSERT INTO CUSTOMER (firstname,lastname,email,password) VALUES (@fn,@ln,@em,@pwd)";
+            //icmd.Connection = con;
+            icmd.CommandText = "INSERT INTO CUSTOMER (firstname,lastname,email,password) VALUES (@fn,@ln,@em,@pwd);SELECT SCOPE_IDENTITY();";
             icmd.Parameters.AddWithValue("@fn", fn.Text.Trim().ToLower());
             icmd.Parameters.AddWithValue("@ln", ln.Text.Trim().ToLower());
             icmd.Parameters.AddWithValue("@em", userEmail.Text.Trim().ToLower());
@@ -58,11 +71,76 @@ namespace islandCart.client
             icmd.CommandType = CommandType.Text;
 
             con.Open();
-            icmd.ExecuteNonQuery();
+            lastCid= Convert.ToInt32(icmd.ExecuteScalar());
+            
             con.Close();
-            Response.Redirect("~/client/registration.aspx");
+
+            LoginUser(lastCid);
+
+      
+
+
+
         }
 
+
+        void LoginUser(int lastCid)
+        {
+            SqlConnection con = new SqlConnection(_conString);
+            SqlCommand scmd = new SqlCommand();
+            scmd.Connection = con;
+            scmd.CommandText = "SELECT * FROM customer WHERE c_id=@id";
+            scmd.Parameters.AddWithValue("@id", lastCid);
+            SqlDataReader dr;
+            con.Open();
+            dr = scmd.ExecuteReader();
+
+            if (dr.HasRows)
+            {
+
+                if (dr.Read())
+                {
+                    string cid = dr["c_id"].ToString();
+                    string firstname = dr["firstname"].ToString();
+                    
+                    string email = dr["email"].ToString();
+
+                    Session["cid"] = cid;
+                    Session["sfn"] = firstname;
+                    Session["email"] = email;
+                    Session["sFlag"] = true;
+
+                    CustomerAudit(cid);
+
+                    Response.Redirect("~/client/index.aspx");
+                }
+            }
+
+        }
+
+        void CustomerAudit(string cid)
+        {
+            string ip = "";
+            string strHostName = "";
+            strHostName = System.Net.Dns.GetHostName();
+            IPHostEntry ipEntry = System.Net.Dns.GetHostEntry(strHostName);
+            IPAddress[] addr = ipEntry.AddressList;
+            ip = addr[2].ToString();
+
+            SqlConnection con = new SqlConnection(_conString);
+            SqlCommand icmd = new SqlCommand();
+            icmd.Connection = con;
+            icmd.CommandText = "INSERT INTO customer_audit (c_id,ip_address) VALUES (@cid,@ip)";
+            icmd.Parameters.AddWithValue("@cid", cid);
+            icmd.Parameters.AddWithValue("@ip", ip);
+            icmd.CommandType = CommandType.Text;
+
+            con.Open();
+            icmd.ExecuteNonQuery();
+            con.Close();
+
+
+        }
 
 
         bool IsEmailFound()

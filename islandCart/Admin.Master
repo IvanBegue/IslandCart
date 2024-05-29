@@ -92,7 +92,10 @@
 					<ul class="list-unstyled collapse" aria-expanded="true" id="nav-uiKit">
 						<li>
 							<asp:HyperLink runat="server" Text="New Product" NavigateUrl="~/admin/addproduct.aspx"></asp:HyperLink>
+
 							<asp:HyperLink runat="server" Text="All Products" NavigateUrl="~/admin/listproduct.aspx" ></asp:HyperLink>
+
+                            <asp:HyperLink NavigateUrl="#" runat="server" Text="Bulk Upload"/>
 						</li>
 						<%--<li>
 							<asp:HyperLink runat="server" Text="" ></asp:HyperLink>
@@ -179,10 +182,14 @@
 					</a>
 					<ul class="collapse list-unstyled" id="nav-icons">
 						<li>
-							<asp:HyperLink runat="server" NavigateUrl="~/admin/brand.aspx" Text="Create Brand"/>
+							<asp:HyperLink runat="server" NavigateUrl="~/admin/brand.aspx" Text="Brand"/>
 						</li>
 						<li>
-							<asp:HyperLink runat="server" NavigateUrl="~/admin/color.aspx" Text="Create Color"/>
+							<asp:HyperLink runat="server" NavigateUrl="~/admin/color.aspx" Text=" Color"/>
+						</li>
+
+						<li>
+                            <asp:HyperLink NavigateUrl="~/admin/productUnit.aspx" runat="server" Text="Product Unit"/>
 						</li>
 					</ul>
 				</li>

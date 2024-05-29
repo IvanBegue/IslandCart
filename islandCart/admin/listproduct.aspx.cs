@@ -76,5 +76,21 @@ namespace islandCart.admin
             Response.Redirect(PagePath);
 
         }
+
+        protected void btnStock_Click(object sender, EventArgs e)
+        {
+
+        }
+        int currentRow = 1;
+        protected void rptProduct_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+
+                Label rowNumber = (Label)e.Item.FindControl("lblRowCount");
+                rowNumber.Text = currentRow.ToString();
+                currentRow++;
+            }
+        }
     }
 }

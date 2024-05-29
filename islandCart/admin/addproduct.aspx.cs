@@ -86,8 +86,6 @@ namespace islandCart.admin
             }
 
             rptsize.DataSource = dtSize;
-
-
             rptsize.DataBind();
         }
 
@@ -140,8 +138,6 @@ namespace islandCart.admin
             }
 
             rptColor.DataSource = dtColor;
-
-
             rptColor.DataBind();
         }
 

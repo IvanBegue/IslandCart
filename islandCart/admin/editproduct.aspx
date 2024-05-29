@@ -1,6 +1,69 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin.Master" AutoEventWireup="true" CodeBehind="editproduct.aspx.cs" Inherits="islandCart.admin.editproduct" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <%-- <script>
+     function previewImage() {
+         var fileUpload = document.getElementById("<%= productImg1.ClientID %>");
+
+         var fileUpload2 = document.getElementById("<%= productImg2.ClientID %>");
+
+
+         var fileUpload3 = document.getElementById("<%= productImg3.ClientID %>");
+
+         var fileUpload4 = document.getElementById("<%= productImg4.ClientID %>");
+
+         var imgPreview = document.getElementById("<%= imgPreview.ClientID %>");
+
+         var imgPreview1 = document.getElementById("<%= imgPreview1.ClientID %>");
+
+         var imgPreview2 = document.getElementById("<%= imgPreview2.ClientID %>");
+
+
+         var imgPreview3 = document.getElementById("<%= imgPreview3.ClientID %>");
+
+
+         if (fileUpload.files && fileUpload.files[0]) {
+             var reader = new FileReader();
+
+             reader.onload = function (e) {
+                 imgPreview.src = e.target.result;
+             };
+
+             reader.readAsDataURL(fileUpload.files[0]);
+         }
+
+         if (fileUpload2.files && fileUpload2.files[0]) {
+             var reader = new FileReader();
+
+             reader.onload = function (e) {
+                 imgPreview1.src = e.target.result;
+             }
+             reader.readAsDataURL(fileUpload2.files[0]);
+         }
+
+
+
+         if (fileUpload3.files && fileUpload3.files[0]) {
+             var reader = new FileReader();
+
+             reader.onload = function (e) {
+                 imgPreview2.src = e.target.result;
+             }
+             reader.readAsDataURL(fileUpload3.files[0]);
+         }
+
+
+         if (fileUpload4.files && fileUpload4.files[0]) {
+             var reader = new FileReader();
+
+             reader.onload = function (e) {
+                 imgPreview3.src = e.target.result;
+             }
+             reader.readAsDataURL(fileUpload4.files[0]);
+         }
+     }
+
+     </script>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <ol class="breadcrumb mt-2 mb-3">
@@ -17,7 +80,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="widget-area-2 lorvens-box-shadow">
-                        <h3 class="widget-title">Add New Product</h3>
+                        <h3 class="widget-title">Edit Current Product</h3>
                         <div class="lorvens-widget">
                             <div class="form-group">
                                 <label>Product Name</label>
@@ -43,7 +106,7 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label>Weight</label>
+                                    <label>Measurement</label>
                                     <asp:TextBox runat="server" ID="txtWeight" CssClass="form-control" placeholder="0.00"></asp:TextBox>
                                 </div>
                                 <div class="col-md-4">
@@ -59,7 +122,7 @@
                             <div class="form-group row">
                                 <div class="col-md-4">
                                     <label>Brand</label>
-                                    <asp:DropDownList runat="server" ID="ddlBrand" CssClass="form-control">
+                                    <asp:DropDownList runat="server" ID="ddlBrand" CssClass="form-control text-capitalize" >
                                     </asp:DropDownList>
                                 </div>
                                 <div class="col-md-4">
@@ -83,33 +146,38 @@
 
             </div>
             <hr />
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="widget-area-2 ">
-                        <h3 class="widget-title">Product Color Details</h3>
-                        <div class="lorvens-widget">
+           <div class="row">
+    <div class="col-md-12">
+        <div class="widget-area-2 ">
+            <h3 class="widget-title">Product Color Details</h3>
+            <div class="lorvens-widget">
 
-                            <div class="form-group row">
-                                <asp:Repeater runat="server" ID="rptColor">
-                                    <ItemTemplate>
-                                        <div class="col-md-2">
-                                            <asp:HiddenField ID="hfColor" runat="server" Value='<%# Eval("Color") %>' />
-                                            <div style='<%# "width: 30px; height: 30px; background-color: " +Eval("Color") %>'></div>
-                                            <asp:TextBox runat="server" Placeholder="Enter Quantity" CssClass="form-control form-control-sm" ID="txtQuantityColor" TextMode="Number" />
-                                        </div>
-                                    </ItemTemplate>
-                                </asp:Repeater>
+                <div class="form-group row">
+                    <asp:Repeater runat="server" ID="rptColor" OnItemDataBound="rptColor_ItemDataBound">
+                        <ItemTemplate>
+                            <div class="col-md-3">
+                                 <asp:Label Text='<%# Eval("Color") %>' runat="server" />
+                                <asp:HiddenField ID="hfColor" runat="server" Value='<%# Eval("Color") %>' />
 
-
-
+                                 <div class="color-container" style="display:flex; align-items:center;">
+                                    
+                                <div  style='<%# "width: 55px;  height: 43px; background-color: " +Eval("Color") %>'></div><asp:TextBox runat="server" Placeholder="Enter Quantity" CssClass="form-control form-control-sm" ID="txtQuantityColor" TextMode="Number"  />
+                                 </div>
                             </div>
+                        </ItemTemplate>
 
-                        </div>
-                    </div>
+                    </asp:Repeater>
+
+
 
                 </div>
 
             </div>
+        </div>
+
+    </div>
+
+</div>
             <hr />
             <div class="row">
                 <div class="col-md-12">
@@ -118,12 +186,12 @@
                         <div class="lorvens-widget">
 
                             <div class="form-group row">
-                                <asp:Repeater runat="server" ID="rptsize">
+                                <asp:Repeater runat="server" ID="rptsize" OnItemDataBound="rptsize_ItemDataBound" >
                                     <ItemTemplate>
                                         <div class="col-md-2">
                                             <asp:Label Text='<%# Eval("size_type") %>' runat="server" CssClass="fs-2 pb-2 text-uppercase" />
                                             <asp:HiddenField ID="hfSizeId" runat="server" Value='<%# Eval("size_id") %>' />
-                                            <asp:TextBox runat="server" TextMode="Number" CssClass="form-control form-control-sm" ID="txtSizeTotal" />
+                                            <asp:TextBox runat="server" TextMode="Number" CssClass="form-control form-control-sm" ID="txtSizeTotal" text='<%# Eval("quantity") %>'/>
                                         </div>
                                     </ItemTemplate>
                                 </asp:Repeater>
@@ -132,74 +200,69 @@
 
                         </div>
                     </div>
-
                 </div>
-
             </div>
-            <hr />
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="widget-area-2 ">
-                        <h3 class="widget-title">Product Image & Video</h3>
-                        <div class="lorvens-widget">
-                            <div class="d-flex justify-content-start">
-                                <div class="form-group ">
-                                    <asp:Label runat="server" Text="Main Photo"></asp:Label>
-                                    <div class="card" style="width: 15rem;">
-                                        <div class="card-body">
-                                            <asp:Image ImageUrl="~/assets/images/product/default.png" runat="server" ID="imgPreview" AlternateText="Default Image" Height="200" Width="200" />
 
+            <hr/>
+
+            <%--<div class="container">--%>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget-area-2">
+                <h3 class="widget-title">Product Image</h3>
+                <div class="lorvens-widget">
+                    <div class="row">
+
+                        <asp:Repeater runat="server" ID="rptProductImage">
+                            <ItemTemplate>
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="form-group">
+
+                                        <div class="card" style="width: 15rem;">
+                                            <div class="card-body">
+                                                <asp:Image ImageUrl='<%# Eval("fileImage") %>' runat="server" ID="imgPreview" AlternateText="Default Image" Height="200" Width="200" />
+                                            </div>
+                                        </div>
+                                        <asp:FileUpload runat="server" ID="productImg1" AllowMultiple="False" onChange="previewImage()" />
+                                    </div>
+                                </div>
+                            </ItemTemplate>
+                        </asp:Repeater>
+
+                        
+
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+               <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="widget-area-2 ">
+                            <h3 class="widget-title">Product  Video</h3>
+                            <div class="lorvens-widget">
+                                    <div class="form-group">
+                                        <div class="form-group row">
+                                            <label>Video Link</label>
+                                            <asp:TextBox runat="server" ID="txtvideo" placeholder="https://" CssClass="form-control" AutoCompleteType="Disabled"></asp:TextBox>
                                         </div>
                                     </div>
-                                    <asp:FileUpload runat="server" ID="productImg1" AllowMultiple="False" onChange="previewImage()" />
                                 </div>
-
-                                <div classs="form-group">
-                                    <asp:Label Text="Product Image" runat="server" />
-                                    <div class="card" style="width: 15rem;">
-                                        <div class="card-body">
-                                            <asp:Image ImageUrl="~/assets/images/product/default.png" runat="server" ID="imgPreview1" AlternateText="Default Image" Height="200" Width="200" />
-                                        </div>
-                                    </div>
-                                    <asp:FileUpload runat="server" ID="productImg2" OnChange="previewImage()" />
-                                </div>
-                                <div class="form-group">
-                                    <asp:Label Text="Product Image" runat="server" />
-                                    <div class="card" style="width: 15rem;">
-                                        <div class="card-body">
-                                            <asp:Image ImageUrl="~/assets/images/product/default.png" runat="server" ID="imgPreview2" AlternateText="Default Image" Height="200" Width="200" />
-                                        </div>
-                                    </div>
-                                    <asp:FileUpload runat="server" ID="productImg3" onChange="previewImage()" />
-                                </div>
-                                <div class="form-group">
-                                    <asp:Label Text="Product Image" runat="server" />
-                                    <div class="card" style="width: 15rem;">
-                                        <div class="card-body">
-                                            <asp:Image ImageUrl="~/assets/images/product/default.png" runat="server" ID="imgPreview3" AlternateText="Default Image" Height="200" Width="200" />
-                                        </div>
-                                    </div>
-                                    <asp:FileUpload runat="server" ID="productImg4" onChange="previewImage()" />
-                                </div>
-
-
-
-                            </div>
-
-
-
-
-                            <div class="form-group ">
-                                <label>Video Link</label>
-                                <asp:TextBox runat="server" ID="txtvideo" placeholder="https://" CssClass="form-control"></asp:TextBox>
-                            </div>
+           
                         </div>
                     </div>
-                </div>
+                     </div>
 
-            </div>
 
-            <asp:Button Text="Add" runat="server" CssClass="btn btn-primary" ID="btnAdd" UseSubmitBehavior="False" />
+
+            <asp:Button Text="Edit" runat="server" CssClass="btn btn-primary" ID="btnAdd" UseSubmitBehavior="False" onClick="btnAdd_Click"/>
             <asp:Button Text="Cancel" runat="server" CssClass="btn btn-secondary" />
 
 

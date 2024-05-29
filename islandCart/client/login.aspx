@@ -5,12 +5,12 @@
     var target = $(element).attr('toggle');
     var passwordField = $(target);
 
-    if (passwordField.attr('type') === 'password') {
-        passwordField.attr('type', 'text');
-    } else {
-        passwordField.attr('type', 'password');
+        if (passwordField.attr('type') === 'password') {
+            passwordField.attr('type', 'text');
+        } else {
+            passwordField.attr('type', 'password');
+        }
     }
-}
     </script>
 
 </asp:Content>

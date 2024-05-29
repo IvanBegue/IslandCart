@@ -123,7 +123,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="About.aspx" />
     <Content Include="admin\creategiftcard.aspx" />
     <Content Include="admin\addflashsale.aspx" />
     <Content Include="admin\addproduct.aspx" />
@@ -520,13 +519,6 @@
       <DependentUpon>updateprofile.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="About.aspx.cs">
-      <DependentUpon>About.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="About.aspx.designer.cs">
-      <DependentUpon>About.aspx</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="client\allproducts.aspx.cs">
       <DependentUpon>allproducts.aspx</DependentUpon>

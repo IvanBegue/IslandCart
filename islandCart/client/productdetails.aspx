@@ -42,7 +42,25 @@
          .rate > label:hover ~ input:checked ~ label {
              color: #c59b08;
          }
+
+          .video-popup {
+      display: inline-block;
+      margin: 20px;
+      cursor: pointer;
+      color: #1760BF;
+      text-decoration: none;
+    }
+    .video-popup:hover {
+      color: #c00;
+    }
     </style>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+     
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <section class="product-details-wrapper pt-50 pb-100">
@@ -224,6 +242,7 @@
                   Reviews
                 </a>
               </li>
+
               <li class="nav-item" role="presentation">
                 <a
                   id="specifications-tab"
@@ -236,6 +255,19 @@
                   specifications
                 </a>
               </li>
+                 <li class="nav-item" role="presentation">
+                   <a
+                     id="video-tab"
+                     data-toggle="tab"
+                     href="#video"
+                     role="tab"
+                     aria-controls="video"
+                     aria-selected="false"
+                   >
+                     video
+                   </a>
+                 </li>
+
             </ul>
           </div>
 
@@ -371,7 +403,9 @@
                             </div>
                           </div>
                           <div class="rating-form-btn">
-                              <asp:Button Text="write a  review" runat="server"  CssClass="main-btn primary-btn" ID="btnAdd" OnClick="btnAdd_Click"/>
+                              <asp:Button Text="write a  review" runat="server"  CssClass="main-btn primary-btn" ID="btnAdd" OnClick="btnAdd_Click" Visible="true"/>
+
+                              <asp:Button Text="Login To Post Review" runat="server"  CssClass="main-btn primary-btn" ID="btnLogin"  Visible="false"/>
                             
                           </div>
                         </div>
@@ -480,6 +514,7 @@
                 </div>
               </div>
             </div>
+
             <div
               class="tab-pane fade"
               id="specifications"
@@ -527,8 +562,52 @@
                 </div>
               </div>
             </div>
+
+
+              <div
+              class="tab-pane fade"
+              id="video"
+              role="tabpanel"
+              aria-labelledby="video-tab"
+            >
+              <div class="specifications-wrapper">
+                <div class="row">
+                  <div class="col-lg-8">
+                    
+                    <div class="mb-15 pt-30">
+                       <div class="links">
+                            <h4>Video-based:</h4>
+                            <ul id="video-popups">
+                              <li><a class="video-popup" href="https://www.youtube.com/watch?v=zpOULjyy-n8" data-effect="mfp-zoom-out">Zoom-out Video</a></li>
+                            </ul>
+                          </div>
+                        
+                    </div>
+        
+        
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
           </div>
         </div>
       </div>
     </section>
+    <script>
+        $(document).ready(function () {
+            $('.video-popup').magnificPopup({
+                type: 'iframe',
+                mainClass: 'mfp-zoom-out',
+                removalDelay: 300,
+                preloader: false,
+                fixedContentPos: false
+            });
+        });
+
+    </script>
+
+    
+
 </asp:Content>

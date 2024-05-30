@@ -8,6 +8,9 @@ using System.Data;
 using System.Web.Configuration;
 using System.Data.SqlClient;
 using System.IO;
+using islandCart.UserAuthentication;
+using System.Security.Cryptography;
+
 
 namespace islandCart.client
 {
@@ -24,6 +27,8 @@ namespace islandCart.client
             if (!Page.IsPostBack)
             {
                 getProductDetails();
+
+                SetSubmitButton();
             }
 
         }
@@ -121,28 +126,55 @@ namespace islandCart.client
 
         protected void btnAdd_Click(object sender, EventArgs e)
         {
-            //SAVING RECOMMENDATION 
-            int cid = 2;
+            Authentication userAuth = new Authentication();
+
+
+            if (!userAuth.IsUserLogin(Session))
+            {
+                Response.Redirect("~/client/login.aspx");
+            }
+            else
+            {
+                int rate = Convert.ToInt32(Request.Form["rate"]);
+                SqlConnection con = new SqlConnection(_conString);
+                SqlCommand icmd = new SqlCommand();
+
+                icmd.Connection = con;
+                icmd.CommandText = "INSERT INTO product_recommendation (description,product_id,c_id,rating) VALUES (@desc,@pid,@cid,@rate)";
+                con.Open();
+                icmd.Parameters.AddWithValue("@desc", txtReview.Text.Trim());
+                icmd.Parameters.AddWithValue("@pid", pid);
+                icmd.Parameters.AddWithValue("@cid", 1);
+                icmd.Parameters.AddWithValue("@rate", rate);
+
+                icmd.CommandType = CommandType.Text;
+
+                icmd.ExecuteNonQuery();
+                con.Close();
+                //Saveimage(lastid);
+                Response.Redirect("~/client/productdetails.aspx?q=" + pid);
+            }
+
+
            
 
-            int rate = Convert.ToInt32(Request.Form["rate"]);
-            SqlConnection con = new SqlConnection(_conString);
-            SqlCommand icmd = new SqlCommand();
+        }
 
-            icmd.Connection = con;
-            icmd.CommandText = "INSERT INTO product_recommendation (description,product_id,c_id,rating) VALUES (@desc,@pid,@cid,@rate)";
-            con.Open();
-            icmd.Parameters.AddWithValue("@desc", txtReview.Text.Trim());
-            icmd.Parameters.AddWithValue("@pid", pid);
-            icmd.Parameters.AddWithValue("@cid", cid);
-            icmd.Parameters.AddWithValue("@rate", rate);
+        void SetSubmitButton()
+        {
+            Authentication userAuth = new Authentication();
 
-            icmd.CommandType = CommandType.Text;
+            if (!userAuth.IsUserLogin(Session))
+            {
+                btnAdd.Visible = false;
+                btnLogin.Visible = true;
+            }
+            else
+            {
+                btnAdd.Visible = true;
+                btnLogin.Visible = false;
 
-            icmd.ExecuteNonQuery();
-            con.Close();
-            //Saveimage(lastid);
-            Response.Redirect("~/client/productdetails.aspx?q="+pid);
+            }
 
         }
 
@@ -167,5 +199,8 @@ namespace islandCart.client
             //}
         }
 
+
+
+       
     }
 }

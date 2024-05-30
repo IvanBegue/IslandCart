@@ -1,77 +1,85 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Customer.Master" AutoEventWireup="true" CodeBehind="shoppingcart.aspx.cs" Inherits="islandCart.client.shoppingcart" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-  <script type="text/javascript">
-      function updateQuantity(button, increment) {
-          const input = button.parentElement.querySelector('input');
-          let quantity = parseInt(input.value);
+ 
+<script type="text/javascript">
+    function updateQuantity(button, increment) {
+        const input = button.parentElement.querySelector('input[type="text"]');
+        let quantity = parseInt(input.value);
 
-          if (isNaN(quantity)) {
-              quantity = 0;
-          }
+        if (isNaN(quantity)) {
+            quantity = 0;
+        }
 
-          quantity += increment;
+        quantity += increment;
 
-          if (quantity < 1) {
-              quantity = 1; 
-          }
+        if (quantity < 1) {
+            quantity = 1;
+        }
 
-          input.value = quantity;
+        input.value = quantity;
 
-          const row = button.closest('tr');
-          const priceElement = row.querySelector('.price');
-          const unitPrice = parseFloat(row.getAttribute('data-unit-price'));
+        const row = button.closest('tr');
+        const hiddenInput = row.querySelector('input[type="hidden"]');
+        hiddenInput.value = quantity; // Update hidden input with new quantity
 
-          if (isNaN(unitPrice)) {
-              console.error('Unit price is not a number.');
-              return;
-          }
+        const priceElement = row.querySelector('.price');
+        const unitPrice = parseFloat(row.getAttribute('data-unit-price'));
 
-          const newPrice = unitPrice * quantity;
-          priceElement.textContent = 'Rs ' + newPrice.toFixed(2);
+        if (isNaN(unitPrice)) {
+            console.error('Unit price is not a number.');
+            return;
+        }
 
-          updateTotal();
-      }
+        const newPrice = unitPrice * quantity;
+        priceElement.textContent = 'Rs ' + newPrice.toFixed(2);
 
-      function updateTotal() {
-          let Subtotal = 0;
-          let DeliveryCost = 200;
-          let Discount = 0;
-          let total = 0;
-          document.querySelectorAll('tr[data-unit-price]').forEach(row => {
-              const quantity = parseInt(row.querySelector('input').value);
-              const unitPrice = parseFloat(row.getAttribute('data-unit-price'));
-              if (!isNaN(quantity) && !isNaN(unitPrice)) {
-                  Subtotal += unitPrice * quantity;
+        updateTotal();
+    }
 
-              }
-          });
+    function updateTotal() {
+        let Subtotal = 0;
+        const DeliveryCost = 200;
+        const Discount = 0;
 
-          total = Subtotal + Discount + DeliveryCost;
+        document.querySelectorAll('tr[data-unit-price]').forEach(row => {
+            const checkbox = row.querySelector('input[type="checkbox"]');
+            if (checkbox && checkbox.checked) {
+                const quantity = parseInt(row.querySelector('input[type="text"]').value);
+                const unitPrice = parseFloat(row.getAttribute('data-unit-price'));
 
-          document.getElementById('<%= lblSubTotal.ClientID %>').textContent = 'Rs ' + Subtotal.toFixed(2);
-         
-          document.getElementById('<%= lblDiscount.ClientID %>').textContent = 'Rs ' + Discount.toFixed(2);
+                if (!isNaN(quantity) && !isNaN(unitPrice)) {
+                    Subtotal += unitPrice * quantity;
+                }
+            }
+        });
 
-          document.getElementById('<%= lblDeliveryCost.ClientID %>').textContent = 'Rs ' + DeliveryCost.toFixed(2);
+        const total = Subtotal + DeliveryCost - Discount;
 
-          document.getElementById('<%= lblTotalPrice.ClientID%>').textContent = 'Rs ' + total.toFixed(2);
-      }
+        document.getElementById('<%= lblSubTotal.ClientID %>').textContent = 'Rs ' + Subtotal.toFixed(2);
+        document.getElementById('<%= lblDiscount.ClientID %>').textContent = 'Rs ' + Discount.toFixed(2);
+        document.getElementById('<%= lblDeliveryCost.ClientID %>').textContent = 'Rs ' + DeliveryCost.toFixed(2);
+        document.getElementById('<%= lblTotalPrice.ClientID %>').textContent = 'Rs ' + total.toFixed(2);
+    }
 
-      document.addEventListener('DOMContentLoaded', function () {
-          document.querySelectorAll('.sub').forEach(button => {
-              button.addEventListener('click', function () {
-                  updateQuantity(this, -1);
-              });
-          });
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.sub').forEach(button => {
+            button.addEventListener('click', function () {
+                updateQuantity(this, -1);
+            });
+        });
 
-          document.querySelectorAll('.add').forEach(button => {
-              button.addEventListener('click', function () {
-                  updateQuantity(this, 1);
-              });
-          });
-      });
-  </script>
+        document.querySelectorAll('.add').forEach(button => {
+            button.addEventListener('click', function () {
+                updateQuantity(this, 1);
+            });
+        });
+    });
+</script>
+
+
+
+
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -111,7 +119,7 @@
                       <ItemTemplate>
                           <tr data-unit-price='<%# Eval("product_price") %>'>
                               <td>
-                                  <asp:CheckBox  runat="server" ID="chkProduct" value='<%# Eval("product_id") %>'  />
+                                  <asp:CheckBox  runat="server" ID="chkProduct" value='<%# Eval("product_id") %>'  Checked="True" />
                               </td>
                               <td>
                                 <div class="product-cart d-flex">
@@ -133,6 +141,7 @@
                                     <i class="mdi mdi-minus"></i>
                                   </button>
                                   <input type="text" value="1" />
+                                        <asp:HiddenField ID="hiddenProductQuantity" runat="server" Value="1" />
                                   <button type="button" id="add" class="add">
                                     <i class="mdi mdi-plus"></i>
                                   </button>

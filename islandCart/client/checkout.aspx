@@ -171,7 +171,7 @@
                                                  <ul>
                                                    <%--<li><span>Brown</span></li>
                                                    <li><span>XL</span></li>--%>
-                                                   <li><span>1 X <%# Eval("product_price") %></span></li>
+                                                   <li><span><%# Eval("Quantity") %> X <%# Eval("product_price") %></span></li>
                                                  </ul>
                                                </div>
                                              </div>
@@ -194,7 +194,7 @@
                         <div class="total-payable">
                           <div class="payable-price">
                             <p class="value">Total Price:</p>
-                            <p class="price">$164.50</p>
+                            <p class="price"><asp:Label ID="lblTotalPrice" runat="server" /></p>
                           </div>
                         </div>
 

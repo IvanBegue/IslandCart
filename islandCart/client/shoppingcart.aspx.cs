@@ -172,20 +172,40 @@ namespace islandCart.client
 
         protected void btnCheckout_Click(object sender, EventArgs e)
         {
-            List<int> selectedProductId = new List<int>();
+            List<int> selectedProductIds = new List<int>();
+            List<int> selectedProductQuantities = new List<int>();
 
-            foreach(RepeaterItem item in rptProductCart.Items)
+            foreach (RepeaterItem item in rptProductCart.Items)
             {
                 CheckBox chkProduct = (CheckBox)item.FindControl("chkProduct");
                 if (chkProduct != null && chkProduct.Checked)
                 {
                     int productId = int.Parse(chkProduct.Attributes["value"]);
-                    selectedProductId.Add(productId);
+                    selectedProductIds.Add(productId);
+
+                    // Retrieve the quantity from the hidden input field
+                    HiddenField hiddenQuantityField = (HiddenField)item.FindControl("hiddenProductQuantity");
+                    if (hiddenQuantityField != null)
+                    {
+                        int quantity;
+                        if (int.TryParse(hiddenQuantityField.Value, out quantity))
+                        {
+                            selectedProductQuantities.Add(quantity);
+                        }
+                        else
+                        {
+                            // Handle the case where the quantity is not a valid integer
+                            selectedProductQuantities.Add(1); // Default quantity if parsing fails
+                        }
+                    }
                 }
             }
 
-            Session["SelectedProductId"] = selectedProductId;
+            // Store selected product IDs and quantities in session
+            Session["SelectedProductId"] = selectedProductIds;
+            Session["SelectedProductQuantities"] = selectedProductQuantities;
 
+            // Redirect to checkout page
             Response.Redirect("~/client/checkout.aspx");
         }
     }

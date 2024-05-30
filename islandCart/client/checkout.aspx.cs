@@ -26,8 +26,9 @@ namespace islandCart.client
         void getSelectItem()
         {
             List<int> selectedProductIds = Session["SelectedProductId"] as List<int>;
+            List<int> selectedProductQuantities = Session["SelectedProductQuantities"] as List<int>;
 
-            if (selectedProductIds != null && selectedProductIds.Any())
+            if (selectedProductIds != null && selectedProductIds.Any() && selectedProductQuantities != null)
             {
                 using (SqlConnection con = new SqlConnection(_conString))
                 {
@@ -57,13 +58,52 @@ namespace islandCart.client
                         {
                             DataTable dt = new DataTable();
                             da.Fill(dt);
+
+                            // Add quantity column to DataTable
+                            dt.Columns.Add("Quantity", typeof(int));
+
+                            // Add quantities to DataTable
+                            for (int i = 0; i < selectedProductIds.Count; i++)
+                            {
+                                DataRow[] rows = dt.Select($"product_id = {selectedProductIds[i]}");
+                                if (rows.Length > 0)
+                                {
+                                    rows[0]["Quantity"] = selectedProductQuantities[i];
+                                }
+                            }
+
                             rptCheckoutCart.DataSource = dt;
                             rptCheckoutCart.DataBind();
+
+                            // Calculate and display the total price
+                            decimal totalPrice = 0;
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                int quantity = Convert.ToInt32(row["Quantity"]);
+                                decimal productPrice = Convert.ToDecimal(row["product_price"]);
+                                totalPrice += quantity * productPrice;
+                            }
+
+                            lblTotalPrice.Text = "Rs " + totalPrice.ToString("0.00");
                         }
                     }
+
+
+
+
                 }
             }
 
+
+
+
+
         }
+
+
+
+
+
+
     }
 }

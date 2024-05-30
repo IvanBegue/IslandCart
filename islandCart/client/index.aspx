@@ -425,16 +425,40 @@
 
       <main >
 
-        <section
+      <%-- <section
+
         class="content-card-style-10 bg_cover "
         style="background-image: url(/assets/images/homeHeader/banner.jpg)">
-      <%--  <div class="content-card text-center">
-          <h4 class="title">Exotic Bags</h4>
-          <a href="#0" class="content-link"
-            >Explore <i class="mdi mdi-chevron-right"></i
-          ></a>
-        </div>--%>
-      </section>
+
+
+        
+      </section>--%>
+
+          <section>
+               <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="10000">
+            <div   class="content-card-style-10 bg_cover " style="background-image: url(/assets/images/homeHeader/banner.jpg); "></div>
+        </div>
+        <div class="carousel-item" data-bs-interval="10000">
+              <div   class="content-card-style-10 bg_cover " style="background-image: url(/assets/images/homeHeader/banner-fashion-1.jpg); overflow:hidden;" ></div>
+        </div>
+        <div class="carousel-item" data-bs-interval="10000">
+               <div   class="content-card-style-10 bg_cover " style="background-image: url(/assets/images/homeHeader/banner-fashion-2.jpg); overflow:hidden"></div>
+        </div>
+      </div>
+      
+      
+    </div>
+          </section>
+
+          
+
 
       
            <section class="feature-wrapper pt-70">

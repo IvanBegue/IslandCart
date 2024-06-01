@@ -206,10 +206,6 @@
                                                 <input type="radio" id="star1" name="rate" value="1" />
                                                 <label for="star1" title="text">1 star</label>
                                             </div>
-
-                                            
-                                                   
-
                                         </div>
                                         
                                     </div>
@@ -218,7 +214,6 @@
                                     <div class="rating-form">
                                         <div class="single-form form-default">
                                             <asp:Label Text="Write Your Review" runat="server" ID="lblReview"/>
-                                            
 
                                             <div class="form-input">
                                                 <asp:TextBox runat="server" ID="txtReview" TextMode="Multiline" placeholder="Tell to people about your experience with Island Cart"   />
@@ -235,6 +230,7 @@
                                                       </p>
                                                 </div>
                                         </asp:Panel>
+
                                         </div>
                                         <div class="single-rating-form flex-wrap">
                                             <div class="rating-form-file">
@@ -348,10 +344,7 @@
 
                                                         </ul>
                                                     </div>
-                                                    <%--<div class="d-flex gap-2 justify-content-end">
-                                                        <asp:Button Text="Edit" runat="server" CssClass="btn btn-outline-primary" CommandArgument='<%# Eval("testimonials_id") %>' ID="btnEdit"/>  
-                                                        <asp:Button Text="Remove" runat="server" CssClass="btn btn-outline-danger" CommandArgument='<%# Eval("testimonials_id") %>' ID="btnDel" OnClick="btnDel_Click"/>
-                                                    </div>--%>
+                                                   
                                                 </div>
                                                 <hr />
                                             </ItemTemplate>

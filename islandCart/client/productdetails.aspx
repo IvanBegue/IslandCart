@@ -307,89 +307,122 @@
             >
               <div class="review-wrapper">
                 <div class="reviews-title">
-                  <h4 class="title">Customer Reviews (38)</h4>
-                </div>
+                     <h4 class="title">Customer Reviews (<asp:Label ID="lblTotalReviews" runat="server" />)</h4>
+                 </div>
 
                 <div class="reviews-rating-wrapper flex-wrap">
                   <div class="reviews-rating-star">
                     <p class="rating-review">
-                      <i class="mdi mdi-star"></i> <span>4.5</span> of 5
+                      <i class="mdi mdi-star"></i><span>
+                        <asp:Label runat="server" ID="lblAvgRating" /></span> of 5
                     </p>
 
-                    <div class="reviews-rating-bar">
-                      <div class="single-reviews-rating-bar">
-                        <p class="value">5 Starts</p>
-                        <div class="rating-bar-inner">
-                          <div class="bar-inner bg-secondary" style="width: 60%"></div>
+                        <div class="reviews-rating-bar">
+                        <div class="single-reviews-rating-bar">
+                            <p class="value">5 Stars</p>
+                            <div class="rating-bar-inner">
+
+                                <asp:Label runat="server" CssClass="bar-inner bg-secondary" ID="lblBar5" />
+                            </div>
+                            <p class="percent">
+                                <asp:Label runat="server" ID="lblTotal5" />
+                            </p>
                         </div>
-                        <p class="percent">60%</p>
-                      </div>
                     </div>
                     <div class="reviews-rating-bar">
-                      <div class="single-reviews-rating-bar">
-                        <p class="value">4 Starts</p>
-                        <div class="rating-bar-inner">
-                          <div class="bar-inner bg-secondary" style="width: 20%"></div>
+                        <div class="single-reviews-rating-bar">
+                            <p class="value">4 Stars</p>
+                            <div class="rating-bar-inner">
+                                <asp:Label runat="server" CssClass="bar-inner bg-secondary" ID="lblBar4" />
+                            </div>
+                            <p class="percent">
+                                <asp:Label runat="server" ID="lblTotal4" />
+                            </p>
                         </div>
-                        <p class="percent">20%</p>
-                      </div>
                     </div>
                     <div class="reviews-rating-bar">
-                      <div class="single-reviews-rating-bar">
-                        <p class="value">3 Starts</p>
-                        <div class="rating-bar-inner">
-                          <div class="bar-inner  bg-secondary" style="width: 10%"></div>
+                        <div class="single-reviews-rating-bar">
+                            <p class="value">3 Stars</p>
+                            <div class="rating-bar-inner">
+                                <asp:Label runat="server" CssClass="bar-inner bg-secondary" ID="lblBar3" />
+
+
+                            </div>
+                            <p class="percent">
+                                <asp:Label runat="server" ID="lblTotal3" />
+                            </p>
                         </div>
-                        <p class="percent">10%</p>
-                      </div>
                     </div>
                     <div class="reviews-rating-bar">
-                      <div class="single-reviews-rating-bar">
-                        <p class="value">2 Starts</p>
-                        <div class="rating-bar-inner">
-                          <div class="bar-inner bg-secondary" style="width: 5%"></div>
+                        <div class="single-reviews-rating-bar">
+                            <p class="value">2 Stars</p>
+                            <div class="rating-bar-inner">
+                                <asp:Label runat="server" CssClass="bar-inner bg-secondary" ID="lblBar2" />
+                            </div>
+                            <p class="percent">
+                                <asp:Label runat="server" ID="lblTotal2" />
+                            </p>
                         </div>
-                        <p class="percent">05%</p>
-                      </div>
                     </div>
                     <div class="reviews-rating-bar">
-                      <div class="single-reviews-rating-bar">
-                        <p class="value">1 Starts</p>
-                        <div class="rating-bar-inner">
-                          <div class="bar-inner bg-secondary" style="width: 0"></div>
+                        <div class="single-reviews-rating-bar">
+                            <p class="value">1 Star</p>
+                            <div class="rating-bar-inner">
+                                <asp:Label runat="server" CssClass="bar-inner bg-secondary" ID="lblBar1" />
+                            </div>
+                            <p class="percent">
+                                <asp:Label runat="server" ID="lblTotal1" />
+                            </p>
                         </div>
-                        <p class="percent">0%</p>
-                      </div>
                     </div>
-                  </div>
+                </div>
 
                   <div class="reviews-rating-form">
-                    <div class="rating-star">
-                      <p>Click on star to review</p>
-                        <div class="d-flex">
+                                 <h3 class="text-center">
+                                <asp:Label Text="Post A Review" runat="server" ID="lblHeader"/>
+                                </h3>
 
-                  <div class="rate">
-                      <input type="radio" id="star5" name="rate" value="5" />
-                      <label for="star5" title="text">5 stars</label>
-                      <input type="radio" id="star4" name="rate" value="4" />
-                      <label for="star4" title="text">4 stars</label>
-                      <input type="radio" id="star3" name="rate" value="3" />
-                      <label for="star3" title="text">3 stars</label>
-                      <input type="radio" id="star2" name="rate" value="2" />
-                      <label for="star2" title="text">2 stars</label>
-                      <input type="radio" id="star1" name="rate" value="1" />
-                      <label for="star1" title="text">1 star</label>
-                  </div>
-                    </div>
-                    </div>
+                        <asp:Panel runat="server" ID="pnlRating" Visible="true">
+                                <div class="rating-star">
+                                    <p>Click on star to review</p>
+
+                                    <div class="d-flex">
+                                        <div class="rate">
+                                            <input type="radio" id="star5" name="rate" value="5" />
+                                            <label for="star5" title="text">5 stars</label>
+                                            <input type="radio" id="star4" name="rate" value="4" />
+                                            <label for="star4" title="text">4 stars</label>
+                                            <input type="radio" id="star3" name="rate" value="3" />
+                                            <label for="star3" title="text">3 stars</label>
+                                            <input type="radio" id="star2" name="rate" value="2" />
+                                            <label for="star2" title="text">2 stars</label>
+                                            <input type="radio" id="star1" name="rate" value="1" />
+                                            <label for="star1" title="text">1 star</label>
+                                        </div>
+                                    </div>
+        
+                                </div>
+                            </asp:Panel>
+
                     <div class="rating-form">
-             
-                        <div class="single-form form-default">
-                          <label>Write your Review</label>
+                               
+                            <div class="single-form form-default">
+                              <asp:Label Text="Write Your Review" runat="server" ID="lblReview"/>
                           <div class="form-input">
                              <asp:TextBox runat="server" ID="txtReview" TextMode="Multiline" placeholder="Write your reviews" />
                             <i class="mdi mdi-message-text-outline"></i>
                           </div>
+
+                                    <asp:Panel runat="server" ID="pnlUserRating" Visible="false">
+                        <div class="mt-2">
+                                 <p>
+                                      Your Rating
+                                  <i class="mdi mdi-star" style="color:#ffc700;"></i>
+                                  <span class="rating"><strong>  <asp:Label ID="lblRating" runat="server" /></strong> of 5</span>
+                                  </p>
+                            </div>
+                        </asp:Panel>
+
                         </div>
                         <div class="single-rating-form flex-wrap">
                           <div class="rating-form-file">
@@ -406,6 +439,15 @@
                               <asp:Button Text="write a  review" runat="server"  CssClass="main-btn primary-btn" ID="btnAdd" OnClick="btnAdd_Click" Visible="true"/>
 
                               <asp:Button Text="Login To Post Review" runat="server"  CssClass="main-btn primary-btn" ID="btnLogin"  Visible="false"/>
+
+                              <asp:Button Text="Edit Review" runat="server" CssClass="main-btn primary-btn" ID="btnEdit" Visible="false" OnClick="btnEdit_Click"/>
+
+                            <asp:Button Text="Save Changes" runat="server" ID="btnSave" CssClass="main-btn primary-btn" visible="false" OnClick="btnSave_Click"/>
+
+                            <asp:Button Text="Cancel" runat="server" ID="btnCancel" CssClass="main-btn secondary-btn" visible="false" onClick="btnCancel_Click"/>
+
+
+                            <asp:Button Text="Remove Review" runat="server" ID="btnRmv" CssClass="main-btn error-btn-border" visible="false" onClick="btnRmv_Click"/>
                             
                           </div>
                         </div>
@@ -466,52 +508,54 @@
                 <div class="reviews-comment">
                   <ul class="comment-items">
                     <li>
-                      <div class="single-review-comment">
-                        <div class="comment-user-info">
-                          <div class="comment-author">
-                            <img
-                              src="assets/images/review/author-1.jpg"
-                              alt=""
-                            />
-                          </div>
-                          <div class="comment-content">
-                            <h6 class="name">User Name</h6>
+                      <asp:Repeater runat="server" ID="rptRecommendation">
+                        <ItemTemplate>
+                            <div class="single-review-comment">
+            
+                                <div class="comment-user-info">
+                                    <div class="comment-author">
 
-                            <p>
-                              <i class="mdi mdi-star"></i>
-                              <span class="rating"
-                                ><strong>4</strong> of 5</span
-                              >
-                              <span class="date">20 Nov 2019 22:01</span>
-                            </p>
-                          </div>
-                        </div>
-                        <div class="comment-user-text">
-                          <p>
-                            Good headphones. The sound is clear. AND the bottoms
-                            repyat and top ring. Currently are really not taken.
-                            For me quiet. With my Beats of course can not be
-                            compared. But for the money and definitely
-                            recommend. The one who took happy as an elephant.
-                            Product as advertised, looks good Quality, sound is
-                            not the best but because of cost-benefit ratio it
-                            seems very good to me, recommended the seller .
-                          </p>
-                          <ul class="comment-meta">
-                            <li>
-                              <i class="mdi mdi-thumb-up"></i> <span>31</span>
-                            </li>
-                            <li><a href="#">Like</a></li>
-                            
-                          </ul>
-                        </div>
-                      </div>
+                                        <asp:Image ImageUrl='<% # Eval("profile_img")%>' runat="server" width="50" Height="50"/>
+                  
+                                    </div>
+                                    <div class="comment-content">
+                                        <h6 class="name text-capitalize">
+                                          <%# Eval("UserName")%>
+
+                                        </h6>
+
+                                        <p>
+                                            <i class="mdi mdi-star"></i>
+                                            <span class="rating"><strong>   <%# Eval("rating") %></strong> of 5</span>
+                                            <span class="date"><%# Eval("date_posted") %></span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="comment-user-text">
+                                    <p>
+                                       <%# Eval("description") %>
+                                    </p>
+                                    <ul class="comment-meta">
+                                        <li>
+                                            <i class="mdi mdi-thumb-up"></i><span>0</span>
+                                        </li>
+                                        <li><a href="#">Like</a></li>
+
+                                    </ul>
+                                </div>
+           
+                            </div>
+                            <hr />
+                        </ItemTemplate>
+                    </asp:Repeater>
 
                       
                     </li>
                     
                   </ul>
                 </div>
+
+
               </div>
             </div>
 

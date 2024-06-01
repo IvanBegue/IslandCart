@@ -13,7 +13,7 @@ namespace islandCart.client
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            StripeConfiguration.ApiKey = "ADD YOUR SECRET KEY FOR YOUR ACCOUNT STRIPE";
+            StripeConfiguration.ApiKey = "sk_test_51PF9O0DZISg8Z4OB0EYFBaj8QSnnrxbqlhJAKUUtpOy1aihQWAv3ek07ngkAM1P0IIbidgcwP2fIVOaikBuxM1ZS00hj3Qca5E";
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)

@@ -7,6 +7,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using System.Web.Configuration;
+using Stripe;
+using Stripe.Checkout;
 
 namespace islandCart.client
 {
@@ -21,6 +23,9 @@ namespace islandCart.client
             {
                 getSelectItem();
             }
+
+            StripeConfiguration.ApiKey = "sk_test_51PF9O0DZISg8Z4OB0EYFBaj8QSnnrxbqlhJAKUUtpOy1aihQWAv3ek07ngkAM1P0IIbidgcwP2fIVOaikBuxM1ZS00hj3Qca5E";
+
         }
 
         void getSelectItem()
@@ -84,7 +89,10 @@ namespace islandCart.client
                                 totalPrice += quantity * productPrice;
                             }
 
-                            lblTotalPrice.Text = "Rs " + totalPrice.ToString("0.00");
+                            lblTotalPrice.Text =totalPrice.ToString("0.00");
+
+                            Session["totalPrice"] = totalPrice.ToString("0.00"); 
+
                         }
                     }
 
@@ -100,10 +108,78 @@ namespace islandCart.client
 
         }
 
+        protected void btnPay_Click(object sender, EventArgs e)
+        {
+            double totalPrice;
+
+            if (Session["totalPrice"] != null)
+            {
+
+                if (double.TryParse(Session["TotalPrice"].ToString(), out totalPrice))
+                {
+                    int totalAmount = (int)totalPrice;
+
+                    // Debugging output to check the parsed amount
+                    System.Diagnostics.Trace.WriteLine("Total Price from Session: " + totalPrice);
+                    Response.Write("Total Price from Session: " + totalPrice + "<br>");
+                    System.Diagnostics.Trace.WriteLine("Total Amount: " + totalAmount);
+                    Response.Write("Total Amount: " + totalAmount + "<br>");
+
+
+                    try
+                    {
+
+
+
+
+                        // Create Checkout Session
+                        var options = new SessionCreateOptions
+                        {
+                            PaymentMethodTypes = new List<string> { "card" },
+                            LineItems = new List<SessionLineItemOptions>
+            {
+                new SessionLineItemOptions
+                {
+                    PriceData = new SessionLineItemPriceDataOptions
+                    {
+                        UnitAmount = totalAmount * 100, // Stripe uses cents, so multiply by 100
+                        Currency = "MUR",
+                        ProductData = new SessionLineItemPriceDataProductDataOptions
+                        {
+                            Name = "Your Product Name",
+                        },
+                    },
+                    Quantity = 1,
+                },
+            },
+                            Mode = "payment",
+                            SuccessUrl = "https://yourwebsite.com",
+                            CancelUrl = "https://yourwebsite.com",
+                        };
+                        var service = new SessionService();
+                        var session = service.Create(options);
+
+                        // Redirect to Stripe Checkout page for payment
+                        Response.Redirect(session.Url);
+                    }
+                    catch (StripeException ex)
+                    {
+                        // Handle Stripe API errors
+                        // Log the error or display a message to the user
+                        Response.Write("Error: " + ex.Message);
+                    }
 
 
 
 
 
+                }
+
+
+            }
+
+            
+
+        }
     }
 }

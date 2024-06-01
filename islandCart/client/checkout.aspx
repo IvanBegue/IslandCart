@@ -112,15 +112,14 @@
                       </div>
                       <div class="col-md-12">
                         <div class="single-form">
-                          <button
-                            class="vjsteps_nxt main-btn primary-btn"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#collapseFour"
-                            aria-expanded="false"
-                            aria-controls="collapseFour"
-                          >
-                            Proceed To Payment
-                          </button>
+                            <asp:Button Text="Proceed To Payment" runat="server" 
+                                ID="btnPay" 
+                                CssClass="vjsteps_nxt main-btn primary-btn"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapseFour"
+                                aria-expanded="false"
+                                aria-controls="collapseFour"
+                                OnClick="btnPay_Click"/>
                         </div>
                       </div>
                     </div>
@@ -194,7 +193,9 @@
                         <div class="total-payable">
                           <div class="payable-price">
                             <p class="value">Total Price:</p>
-                            <p class="price"><asp:Label ID="lblTotalPrice" runat="server" /></p>
+                              
+                              <asp:TextBox runat="server" ID="txtTotal" Visible="false"/>
+                            <p class="price">Rs<asp:Label ID="lblTotalPrice" runat="server"  /></p>
                           </div>
                         </div>
 

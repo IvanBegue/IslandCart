@@ -24,7 +24,7 @@ namespace islandCart.client
                 getSelectItem();
             }
 
-            StripeConfiguration.ApiKey = "sk_test_51PF9O0DZISg8Z4OB0EYFBaj8QSnnrxbqlhJAKUUtpOy1aihQWAv3ek07ngkAM1P0IIbidgcwP2fIVOaikBuxM1ZS00hj3Qca5E";
+            StripeConfiguration.ApiKey = ""; 
 
         }
 

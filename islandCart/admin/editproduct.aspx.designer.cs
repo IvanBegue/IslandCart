@@ -42,6 +42,15 @@ namespace islandCart.admin
         protected global::System.Web.UI.WebControls.TextBox txtprice;
 
         /// <summary>
+        /// lblErrPrice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrPrice;
+
+        /// <summary>
         /// txtWeight control.
         /// </summary>
         /// <remarks>
@@ -87,6 +96,15 @@ namespace islandCart.admin
         protected global::System.Web.UI.WebControls.TextBox txtQuantity;
 
         /// <summary>
+        /// lblErrColor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrColor;
+
+        /// <summary>
         /// rptColor control.
         /// </summary>
         /// <remarks>
@@ -96,6 +114,24 @@ namespace islandCart.admin
         protected global::System.Web.UI.WebControls.Repeater rptColor;
 
         /// <summary>
+        /// chkNoColor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkNoColor;
+
+        /// <summary>
+        /// lblErrSize control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrSize;
+
+        /// <summary>
         /// rptsize control.
         /// </summary>
         /// <remarks>
@@ -103,6 +139,15 @@ namespace islandCart.admin
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater rptsize;
+
+        /// <summary>
+        /// chkNosize control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkNosize;
 
         /// <summary>
         /// rptProductImage control.

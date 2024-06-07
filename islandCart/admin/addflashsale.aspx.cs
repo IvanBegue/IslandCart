@@ -10,6 +10,8 @@ using System.Data.SqlClient;
 using System.EnterpriseServices;
 using System.IO;
 using System.Web.UI.HtmlControls;
+using islandCart.DataAccessor;
+using System.Data.Common;
 
 namespace islandCart.admin
 {
@@ -40,21 +42,31 @@ namespace islandCart.admin
 
         void getProduct()
         {
-            SqlConnection con = new SqlConnection(_conString);
+            DataAccessLayer dataAccess = new DataAccessLayer();
 
-            SqlCommand scmd = new SqlCommand();
+            string query = "SELECT p.product_id, p.product_name, " +
+                           "CONCAT(pf.file_name, '', pf.filepath) AS fileName " +
+                           "FROM product p " +
+                           "JOIN (SELECT pf.product_id, MIN(pf.file_id) AS max_file_id " +
+                           "FROM product_file pf " +
+                           "GROUP BY pf.product_id) max_pf ON max_pf.product_id = p.product_id " +
+                           "JOIN product_file pf ON pf.product_id = max_pf.product_id AND pf.file_id = max_pf.max_file_id " +
+                           "WHERE p.status=1 " +
+                           "ORDER BY p.product_id DESC";
 
-            scmd.Connection = con;
-            scmd.CommandType = CommandType.Text;
-            scmd.CommandText = "SELECT p.product_id, p.product_name, CONCAT(pf.file_name, '', pf.filepath) AS fileName \r\nFROM product p\r\nJOIN (\r\n    SELECT pf.product_id, MIN(pf.file_id) AS max_file_id\r\n    FROM product_file pf\r\n    GROUP BY pf.product_id\r\n) max_pf ON max_pf.product_id = p.product_id\r\nJOIN product_file pf ON pf.product_id = max_pf.product_id AND pf.file_id = max_pf.max_file_id\r\nWHERE p.status=1\r\nORDER BY  p.product_id DESC";
+            SqlConnection con;
+            SqlDataReader dr = dataAccess.GetQuery(query, out con);
 
-            con.Open();
-
-            SqlDataReader dr;
-            dr = scmd.ExecuteReader();
-            rptProduct.DataSource = dr;
-            rptProduct.DataBind();
-            con.Close();
+            try
+            {
+                rptProduct.DataSource = dr;
+                rptProduct.DataBind();
+            }
+            finally
+            {
+                dr.Close();
+                con.Close();
+            }
         }
 
         void getCategory()
@@ -113,22 +125,23 @@ namespace islandCart.admin
 
         protected void btnAdd_Click(object sender, EventArgs e)
         {
-            string BannerPath = "~/assets/images/banners/" + ImgBanner.FileName;
+            string BannerPath = "~/assets/images/banners/" /*+ ImgBanner.FileName*/;
 
             SqlConnection con = new SqlConnection(_conString);
 
             SqlCommand icmd = new SqlCommand();
 
             icmd.Connection = con;
-            icmd.CommandText = "INSERT INTO flashsales (percentage,minimum_percentage,banner,title) VALUES (@per,@min,@banner,@title)SELECT SCOPE_IDENTITY()";
+            icmd.CommandText = "INSERT INTO flashsales (title,percentage,banner,start_date,end_date) VALUES (@title,@per,@banner,@str,@end)SELECT SCOPE_IDENTITY()";
 
             con.Open();
 
-            icmd.Parameters.AddWithValue("@per",txtPercentage.Text);
-            icmd.Parameters.AddWithValue("@min", txtAmount.Text);
+            icmd.Parameters.AddWithValue("@title", txtTitle.Text.ToLower());
+            icmd.Parameters.AddWithValue("@per", txtPercentage.Text);
             icmd.Parameters.AddWithValue("@banner", BannerPath);
-
-            icmd.Parameters.AddWithValue("@title", txtcode.Text);
+            icmd.Parameters.AddWithValue("@str", txtStart.Text);
+            icmd.Parameters.AddWithValue("@end", txtEnd.Text);
+      
 
             lastId = Convert.ToInt32(icmd.ExecuteScalar());
 
@@ -136,22 +149,39 @@ namespace islandCart.admin
 
             con.Close();
 
-            SaveBannerImg(); //Saving Banner Image
+            //SaveBannerImg(); //Saving Banner Image
 
-            if (rbCategory.Checked)
+
+            if (rbPercentage.Checked)
             {
-                SetCategoryFlashSales(lastId);
+                if (rbCategory.Checked)
+                {
+                    SetCategoryFlashSales(lastId);
+                }
+
+
+                if (rbSub.Checked)
+                {
+                    SetSubCategoryFlashSales(lastId);
+                }
+                if (rbProduct.Checked)
+                {
+                    SetProductFlashSales(lastId);
+                }
+
+                if (rbAll.Checked)
+                {
+                    SetAllProductFlashSales(lastId);
+                }
+
             }
 
 
-            if (rbSub.Checked)
+            if (rbBogo.Checked)
             {
-                SetSubCategoryFlashSales(lastId);
+
             }
-            if (rbProduct.Checked) 
-            {
-                SetProductFlashSales(lastId);
-            }
+           
 
 
             Response.Redirect("~/admin/addflashsale.aspx");
@@ -180,13 +210,11 @@ namespace islandCart.admin
 
             icmd.Connection = con;
 
-            icmd.CommandText = "INSERT INTO Category_Flashsale (fl_id,category_id,start_date,end_date) VALUES (@id,@cat,@str,@end)";
+            icmd.CommandText = "INSERT INTO Category_Flashsale (fl_id,category_id) VALUES (@id,@cat)";
 
             con.Open();
             icmd.Parameters.AddWithValue("@id", lastId);
             icmd.Parameters.AddWithValue("@cat",ddlCat.SelectedValue);
-            icmd.Parameters.AddWithValue("@str", txtStart.Text);
-            icmd.Parameters.AddWithValue("@end", txtEnd.Text);
             icmd.ExecuteNonQuery();
 
             con.Close();
@@ -198,13 +226,12 @@ namespace islandCart.admin
             SqlCommand icmd = new SqlCommand();
 
             icmd.Connection = con;
-            icmd.CommandText = "INSERT INTO SubCategory_FlashSales (fl_id,sub_id,start_date,end_date) VALUES (@id,@sub,@str,@end)";
+            icmd.CommandText = "INSERT INTO SubCategory_FlashSales (fl_id,sub_id) VALUES (@id,@sub)";
 
             con.Open();
             icmd.Parameters.AddWithValue("@id", lastId);
             icmd.Parameters.AddWithValue("@sub", ddlSubCategory.SelectedValue);
-            icmd.Parameters.AddWithValue("@str", txtStart.Text);
-            icmd.Parameters.AddWithValue("@end", txtEnd.Text);
+      
             icmd.ExecuteNonQuery();
             con.Close();
 
@@ -227,13 +254,11 @@ namespace islandCart.admin
                         SqlCommand icmd = new SqlCommand();
 
                         icmd.Connection = con;
-                        icmd.CommandText = "INSERT INTO product_flsale (fl_sales_id,product_id,expiry_date,start_date) VALUES (@id,@pid,@str,@end)";
+                        icmd.CommandText = "INSERT INTO product_flsale (fl_sales_id,product_id) VALUES (@id,@pid)";
 
                         con.Open();
                         icmd.Parameters.AddWithValue("@id", lastId);
                         icmd.Parameters.AddWithValue("@pid", productId);
-                        icmd.Parameters.AddWithValue("@str", txtStart.Text);
-                        icmd.Parameters.AddWithValue("@end", txtEnd.Text);
                         icmd.ExecuteNonQuery();
                         con.Close();
 
@@ -241,5 +266,52 @@ namespace islandCart.admin
                 }
             }
         }
+
+        void SetAllProductFlashSales(int lastid)
+        {
+
+            List<int> productIds = new List<int>();
+
+            using(SqlConnection  con = new SqlConnection(_conString))
+            {
+                con.Open();
+                SqlCommand selectCmd = new SqlCommand("SELECT product_id FROM product WHERE status = 1", con);
+                SqlDataReader reader = selectCmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    productIds.Add(reader.GetInt32(0)); //Selecting 1 column in table product
+                }
+
+                reader.Close();
+            }
+
+            using (SqlConnection con = new SqlConnection(_conString))
+            {
+                con.Open();
+                foreach (int productId in productIds)
+                {
+                    using (SqlCommand icmd = new SqlCommand("INSERT INTO product_flsale (fl_sales_id,product_id) VALUES (@id,@pid)", con))
+                    {
+                        icmd.Parameters.AddWithValue("@id", lastId);
+                        icmd.Parameters.AddWithValue("@pid", productId); 
+                        
+
+                        icmd.ExecuteNonQuery();
+                    }
+                }
+
+                con.Close();
+
+            }
+          
+
+
+
+
+
+        }
+
+
     }
 }

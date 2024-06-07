@@ -8,6 +8,8 @@ using System.Data;
 using System.Web.Configuration;
 using System.Data.SqlClient;
 using System.Drawing;
+using Stripe;
+using Ganss.Xss;
 
 namespace islandCart.admin
 {
@@ -29,6 +31,8 @@ namespace islandCart.admin
                 }
                 else
                 {
+                    //lblPageName.PageName = "Edit Product";
+
                     pid = Request.QueryString["q"];
                     getProduct();
 
@@ -40,10 +44,10 @@ namespace islandCart.admin
 
         void getProduct()
         {
-            string currentBrand;
-            string bid;
-            string currentSubCategory;
-            string sid;
+         
+            
+            string currentSubCategory , currentBrand ,currentUnitAbbr ,bid,sid,uid;
+            
             SqlConnection con = new SqlConnection(_conString);
 
             SqlCommand scmd = new SqlCommand();
@@ -52,7 +56,7 @@ namespace islandCart.admin
 
             scmd.CommandType = CommandType.Text;
 
-            scmd.CommandText = "SELECT p.product_id ,p.product_name , p.product_description,p.product_price,p.Weight,p.quantity,p.video_link,b.brand_id,b.brand,\r\nsc.sub_category_id,sc.sub_category\r\nFROM product p,brand b , productsubcategory sc\r\nwhere p.brand_id=b.brand_id AND p.subcategory_id=sc.sub_category_id AND \r\np.status=1 AND p.product_id=@pid";
+            scmd.CommandText = "SELECT p.product_id ,p.product_name , p.product_description,p.product_price,\r\np.Weight,p.quantity,p.video_link,\r\nb.brand_id,b.brand,\r\nsc.sub_category_id,sc.sub_category,\r\nu.unit_abbr,p.u_id\r\nFROM product p,brand b , productsubcategory sc, Unit u\r\nwhere p.brand_id=b.brand_id AND p.subcategory_id=sc.sub_category_id AND \r\np.u_id=u.u_id AND\r\np.status=1 AND p.product_id=@pid\r\n";
 
 
 
@@ -66,15 +70,30 @@ namespace islandCart.admin
             if (dr.Read())
             {
                 txtName.Text = dr["product_name"].ToString();
+
                 txtDescription.Text = dr["product_description"].ToString();
+
                 txtprice.Text = dr["product_price"].ToString();
+
                 txtQuantity.Text = dr["quantity"].ToString();
+
                 txtvideo.Text = dr["video_link"].ToString();
+
                 txtWeight.Text = dr["weight"].ToString();
+
+
                 currentBrand = dr["brand"].ToString();
                 bid = dr["brand_id"].ToString();
+
+
                 currentSubCategory = dr["sub_category"].ToString();
                 sid = dr["sub_category_id"].ToString();
+
+                currentUnitAbbr = dr["unit_abbr"].ToString();
+
+                uid = dr["u_id"].ToString();
+
+
                 getBrand();
 
                 getProductImage();
@@ -86,12 +105,15 @@ namespace islandCart.admin
                 getSize();
 
                 getColor();
+
+                getProductUnit(currentUnitAbbr, uid);
             }
             else
             {
                 Response.Redirect("~/admin/listproduct.aspx");
 
             }
+            con.Close();
 
         }
 
@@ -253,7 +275,12 @@ namespace islandCart.admin
             
            
             ddlBrand.Items.Insert(0, li);
+
         }
+
+
+
+
 
         void getSubcategory(string subcategory,string subId)
         {
@@ -416,6 +443,8 @@ namespace islandCart.admin
 
             return found;
 
+
+
         }
 
 
@@ -423,34 +452,119 @@ namespace islandCart.admin
         {
             pid = Request.QueryString["q"];
 
-            foreach (RepeaterItem item in rptColor.Items)
+            int totalQuantity = int.Parse(txtQuantity.Text);
+
+            int sumOfColorQuantities = 0;
+
+            if (chkNoColor.Checked)
             {
-                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+                foreach (RepeaterItem item in rptColor.Items)
                 {
-                    HiddenField hfColor = (HiddenField)item.FindControl("hfColor");
-                    TextBox txtQuantityColor = (TextBox)item.FindControl("txtQuantityColor");
-
-                    if (txtQuantityColor != null)
+                    if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
                     {
-                        string color = hfColor.Value;
+                        HiddenField hfColor = (HiddenField)item.FindControl("hfColor");
+                        TextBox txtQuantityColor = (TextBox)item.FindControl("txtQuantityColor");
 
-                        using (SqlConnection con = new SqlConnection(_conString))
+                        if (txtQuantityColor != null)
                         {
-                            con.Open();
+                            string color = hfColor.Value;
+                            int colorQuantity = 0;
 
-                            SqlCommand ucmd = new SqlCommand();
-                            ucmd.Connection = con;
-                            ucmd.CommandText = "update productcolor set quantity=@qnt where product_id=@pid AND color=@clr";
+                            using (SqlConnection con = new SqlConnection(_conString))
+                            {
+                                con.Open();
 
-                            ucmd.Parameters.AddWithValue("@qnt", txtQuantityColor.Text);
-                            ucmd.Parameters.AddWithValue("@pid", pid);
-                            ucmd.Parameters.AddWithValue("@clr", color);
-                           
-                           
+                                SqlCommand ucmd = new SqlCommand
+                                {
+                                    Connection = con,
+                                    CommandText = "update productcolor set quantity=@qnt where product_id=@pid AND color=@clr"
+                                };
 
-                            ucmd.ExecuteNonQuery();
+                                ucmd.Parameters.AddWithValue("@qnt", colorQuantity);
+                                ucmd.Parameters.AddWithValue("@pid", pid);
+                                ucmd.Parameters.AddWithValue("@clr", color);
 
-                            con.Close();
+                                ucmd.ExecuteNonQuery();
+
+                                con.Close();
+                            }
+                        }
+                    }
+
+
+                }
+            }
+            else
+            {
+                foreach (RepeaterItem item in rptColor.Items)
+                {
+                    if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+                    {
+                        HiddenField hfColor = (HiddenField)item.FindControl("hfColor");
+                        TextBox txtQuantityColor = (TextBox)item.FindControl("txtQuantityColor");
+
+                        if (txtQuantityColor != null)
+                        {
+                            int colorQuantity = 0;
+
+
+                            if (!int.TryParse(txtQuantityColor.Text, out colorQuantity))
+                            {
+                                // checking if color quantity contain only number
+                                lblErrColor.Visible = true;
+                                lblErrColor.Text = "Please enter valid quantities for all colors.";
+                                return;
+                            }
+
+                            sumOfColorQuantities += colorQuantity;
+                        }
+                    }
+                }
+
+                // Check if the sum of color quantities matches the total quantity
+                if (totalQuantity != sumOfColorQuantities)
+                {
+
+                    lblErrColor.Text = "Stock Quantity for color does not match stock for sum of total quantity";
+                    lblErrColor.Visible = true;
+                    txtQuantity.CssClass = "form-control border border-danger";
+                }
+                else
+                {
+
+
+                    // If validation passes, update the database
+                    foreach (RepeaterItem item in rptColor.Items)
+                    {
+                        if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+                        {
+                            HiddenField hfColor = (HiddenField)item.FindControl("hfColor");
+                            TextBox txtQuantityColor = (TextBox)item.FindControl("txtQuantityColor");
+
+                            if (txtQuantityColor != null)
+                            {
+                                string color = hfColor.Value;
+                                int colorQuantity = int.Parse(txtQuantityColor.Text);
+
+                                using (SqlConnection con = new SqlConnection(_conString))
+                                {
+                                    con.Open();
+
+                                    SqlCommand ucmd = new SqlCommand
+                                    {
+                                        Connection = con,
+                                        CommandText = "update productcolor set quantity=@qnt where product_id=@pid AND color=@clr"
+                                    };
+
+                                    ucmd.Parameters.AddWithValue("@qnt", colorQuantity);
+                                    ucmd.Parameters.AddWithValue("@pid", pid);
+                                    ucmd.Parameters.AddWithValue("@clr", color);
+
+                                    ucmd.ExecuteNonQuery();
+
+                                    con.Close();
+                                }
+                            }
                         }
 
 
@@ -461,46 +575,117 @@ namespace islandCart.admin
 
                 }
             }
+            
 
+            
 
+            
+
+            
         }
+
 
         void updateSize()
         {
-            //pid = Request.QueryString["q"];
+            pid = Request.QueryString["q"];
 
+            int totalQuantity = int.Parse(txtQuantity.Text);
 
-            foreach (RepeaterItem item in rptsize.Items)
+            int sumOfSizeQuantities = 0;
+
+            if (chkNosize.Checked)
             {
-                if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+
+
+                foreach (RepeaterItem item in rptsize.Items)
                 {
-                    HiddenField hfSizeId = (HiddenField)item.FindControl("hfSizeId");
-                    TextBox txtSizeTotal = (TextBox)item.FindControl("txtSizeTotal");
-
-                    int sizeId = Convert.ToInt32(hfSizeId.Value);
-
-                    // Insert into productsize table
-                    using (SqlConnection con = new SqlConnection(_conString))
+                    if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
                     {
-                        SqlCommand cmd = new SqlCommand();
-                        cmd.Connection = con;
-                        
-                         cmd.CommandText = "UPDATE productsize set quantity=@qnt WHERE size_id=@size AND product_id=@pid";
+                        HiddenField hfSizeId = (HiddenField)item.FindControl("hfSizeId");
+                        TextBox txtSizeTotal = (TextBox)item.FindControl("txtSizeTotal");
 
-                        cmd.Parameters.AddWithValue("@size",sizeId);
-                        cmd.Parameters.AddWithValue("@pid",pid);
-                        cmd.Parameters.AddWithValue("@qnt",txtSizeTotal.Text);
+                        int sizeId = Convert.ToInt32(hfSizeId.Value);
 
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-                        con.Close();
+                        // Insert into productsize table
+                        using (SqlConnection con = new SqlConnection(_conString))
+                        {
+                            SqlCommand cmd = new SqlCommand();
+                            cmd.Connection = con;
+
+                            cmd.CommandText = "UPDATE productsize set quantity=@qnt WHERE size_id=@size AND product_id=@pid";
+
+                            cmd.Parameters.AddWithValue("@size", sizeId);
+                            cmd.Parameters.AddWithValue("@pid", pid);
+                            cmd.Parameters.AddWithValue("@qnt","0");
+
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                            con.Close();
+
+
+                        }
 
 
                     }
+                }
 
 
+
+            }
+            else
+            {
+                foreach (RepeaterItem item in rptsize.Items)
+                {
+                    TextBox txtSizeTotal = (TextBox)item.FindControl("txtSizeTotal");
+                    int sizeQuantity = int.Parse(txtSizeTotal.Text);
+                    sumOfSizeQuantities += sizeQuantity;
+                }
+
+                if (totalQuantity != sumOfSizeQuantities)
+                {
+                    lblErrSize.CssClass = "text-danger";
+                    lblErrSize.Text = "Stock Quantity for size does not match stock for sum of total quantity";
+                    lblErrSize.Visible = true;
+                    txtQuantity.CssClass = "form-control border border-danger";
+                }
+
+
+
+
+                foreach (RepeaterItem item in rptsize.Items)
+                {
+                    if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
+                    {
+                        HiddenField hfSizeId = (HiddenField)item.FindControl("hfSizeId");
+                        TextBox txtSizeTotal = (TextBox)item.FindControl("txtSizeTotal");
+
+                        int sizeId = Convert.ToInt32(hfSizeId.Value);
+
+                        // Insert into productsize table
+                        using (SqlConnection con = new SqlConnection(_conString))
+                        {
+                            SqlCommand cmd = new SqlCommand();
+                            cmd.Connection = con;
+
+                            cmd.CommandText = "UPDATE productsize set quantity=@qnt WHERE size_id=@size AND product_id=@pid";
+
+                            cmd.Parameters.AddWithValue("@size", sizeId);
+                            cmd.Parameters.AddWithValue("@pid", pid);
+                            cmd.Parameters.AddWithValue("@qnt", txtSizeTotal.Text);
+
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                            con.Close();
+
+
+                        }
+
+
+                    }
                 }
             }
+
+            
 
 
         }
@@ -537,25 +722,107 @@ namespace islandCart.admin
 
        }
 
+
+        void getProductUnit(string currentUnitAbbr, string uid)
+        {
+            SqlConnection con = new SqlConnection(_conString);
+
+            SqlCommand scmd = new SqlCommand();
+
+            scmd.CommandType = CommandType.Text;
+            scmd.CommandText = "SELECT * FROM  unit where u_id <>(SELECT u_id from product where product_id=@pid)";
+            scmd.Connection = con;
+            scmd.Parameters.AddWithValue("@pid", pid);
+
+            SqlDataAdapter da = new SqlDataAdapter(scmd);
+
+            DataTable dtUnit= new DataTable();
+
+            using (dtUnit)
+            {
+                da.Fill(dtUnit);
+
+            }
+
+            ddlWeight.DataSource = dtUnit;
+            ddlWeight.DataTextField = "unit_abbr";
+            ddlWeight.DataValueField = "u_id";
+
+            ddlWeight.DataBind();
+
+            ListItem li = new ListItem(currentUnitAbbr,uid);
+
+
+            ddlWeight.Items.Insert(0, li);
+
+        }
+
+
+        void updateProduct()
+        {
+            pid = Request.QueryString["q"];
+
+            var sanitizer = new HtmlSanitizer();
+
+            string productDescription = sanitizer.Sanitize(txtDescription.Text);
+
+            SqlConnection con = new SqlConnection(_conString);
+            SqlCommand ucmd = new SqlCommand();
+            ucmd.Connection = con;
+
+            ucmd.CommandText = "UPDATE Product set product_name =@Pname,product_description=@desc,product_price=@prc,weight=@wght,u_id=@uid,brand_id=@bid,subcategory_id=@sub,quantity=@qnt,last_update=@upt where product_id=@pid";
+
+            con.Open();
+
+            ucmd.Parameters.AddWithValue("@pname", txtName.Text.ToLower());
+            ucmd.Parameters.AddWithValue("@desc", productDescription);
+            ucmd.Parameters.AddWithValue("@prc", txtprice.Text);
+            ucmd.Parameters.AddWithValue("@wght",txtWeight.Text);
+            ucmd.Parameters.AddWithValue("@uid", ddlWeight.SelectedValue);
+            ucmd.Parameters.AddWithValue("@bid", ddlBrand.SelectedValue);
+            ucmd.Parameters.AddWithValue("@sub", ddlSubcategory.SelectedValue);
+            ucmd.Parameters.AddWithValue("@qnt",txtQuantity.Text);
+            ucmd.Parameters.AddWithValue("@upt", DateTime.Now);
+            ucmd.Parameters.AddWithValue("@pid", pid);
+
+
+            ucmd.ExecuteNonQuery();
+
+            con.Close();
+        }
+
+
+
+
         protected void btnAdd_Click(object sender, EventArgs e)
         {
+            decimal price;
+            if (decimal.TryParse(txtprice.Text, out price) && price < 1.00m)  
+            {
+                lblErrPrice.Text = "Minimum Price Should be greater than or equal to 1.00";
+                
+            }
 
-                updateProductColor();
 
-                if (IsProductHasSize())
-                {
-                    updateSize();
+            updateProduct();
 
-                }
-                else
-                {
-                    addSize();
-                    
-                }
+            updateProductColor();
 
-               
 
-            Response.Redirect("~/admin/editproduct.aspx");
+            if (IsProductHasSize())
+            {
+                updateSize();
+
+            }
+            else
+            {
+                addSize();
+
+            }
+
+
+
+            //Response.Redirect("~/admin/editproduct.aspx?q="+pid);
 
         }
 

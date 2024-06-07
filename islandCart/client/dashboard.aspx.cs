@@ -31,7 +31,7 @@ namespace islandCart.client
                 {
                     getCustomerData();
                     getWishList();
-                   
+                    getOrder();
                 }
 
 
@@ -240,5 +240,30 @@ namespace islandCart.client
             }
             return clearText;
         }
+
+        void getOrder()
+        {
+            SqlConnection con = new SqlConnection(_conString);
+            SqlCommand scmd = new SqlCommand();
+            scmd.CommandText = "SELECT \r\n    o.order_id, \r\n    FORMAT(CAST(o.order_date AS datetime), 'dd/MM/yyyy HH:mm') AS order_date,\r\n    LOWER(o.status) as orderStatus, \r\n    COUNT(ot.product_id) AS product_count,\r\n\tSUM(p.product_price*ot.quantity) AS subtotal\r\nFROM \r\n    orders o\r\nJOIN \r\n    order_item ot ON o.order_id = ot.order_id\r\nJoin \r\n\tproduct p ON p.product_id=ot.product_id\r\nWHERE o.c_id=@cid\r\nGROUP BY \r\n    o.order_id, \r\n    o.order_date, \r\n    o.status,\r\n\tp.product_id\r\n";
+            scmd.Parameters.AddWithValue("@cid", Session["cid"]);
+            scmd.Connection = con;
+            SqlDataAdapter da = new SqlDataAdapter(scmd);
+            DataTable dt = new DataTable();
+
+            using (da)
+            {
+                da.Fill(dt);
+            }
+
+
+            rptOrder.DataSource = dt;
+            rptOrder.DataBind();
+
+
+        }
+
+
+
     }
 }

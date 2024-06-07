@@ -7,42 +7,45 @@
         <div class="row justify-content-center">
           <div class="col-lg-8">
              <div class="checkout-steps-form-style-1 mt-50">
-              <ul id="accordionExample">
+              <ul >
                 <li>
                   <h6
-                    class="title"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapseThree"
-                    aria-expanded="true"
-                    aria-controls="collapseThree"
-                  >
+                    class="title">
                     Your Personal Details
                   </h6>
                   <section
                     class="checkout-steps-form-content collapse show"
                     id="collapseThree"
                     aria-labelledby="headingThree"
-                    data-bs-parent="#accordionExample"
+                    
                   >
                     <div class="row">
-                      <div class="col-md-12">
-                        <div class="single-form form-default">
-                          <label>User Name</label>
-                          <div class="row">
-                            <div class="col-md-6 form-input form">
-                              <input type="text" placeholder="First Name" />
-                            </div>
-                            <div class="col-md-6 form-input form">
-                              <input type="text" placeholder="Last Name" />
+                      <div class="col-md-6">
+                          <div class="single-form form-default">
+                            <label>First name</label>
+                            <div class="form-input form">
+                                <asp:TextBox runat="server" ID="txtFn" placeholder="First name"/>
+                             
                             </div>
                           </div>
                         </div>
-                      </div>
+                        <div class="col-md-6">
+                          <div class="single-form form-default">
+                            <label>Last name</label>
+                            <div class="form-input form">
+                                <asp:TextBox runat="server" ID="txtLn" placeholder="Last name" />
+                              
+                            </div>
+                          </div>
+                        </div>
+                       
+                      
                       <div class="col-md-6">
                         <div class="single-form form-default">
                           <label>Email Address</label>
                           <div class="form-input form">
-                            <input type="text" placeholder="Email Address" />
+                              <asp:TextBox runat="server" ID="txtEmail" placeholder="Email Address" TextMode="Email"/>
+                           
                           </div>
                         </div>
                       </div>
@@ -50,7 +53,8 @@
                         <div class="single-form form-default">
                           <label>Phone Number</label>
                           <div class="form-input form">
-                            <input type="text" placeholder="Phone Number" />
+                              <asp:TextBox runat="server"  ID="txtPhone" placeholder="59****"/>
+                            
                           </div>
                         </div>
                       </div>
@@ -58,7 +62,8 @@
                         <div class="single-form form-default">
                           <label>Delivery  Address</label>
                           <div class="form-input form">
-                            <input type="text" placeholder="Delivery Address" />
+                              <asp:TextBox runat="server" ID="txtAddress" placeholder="Address"/>
+                          
                           </div>
                         </div>
                       </div>
@@ -66,7 +71,24 @@
                         <div class="single-form form-default">
                           <label>City</label>
                           <div class="form-input form">
-                            <input type="text" placeholder="City" />
+                              <asp:TextBox runat="server" ID="txtCity" placeholder="City" list="datalistOptions"/>
+                            <datalist id="datalistOptions">
+                              <option value="Port Louis">
+                              <option value="Beau Bassin-Rose Hill">
+                              <option value="Vacoas-Phoenix">
+                              <option value="Curepipe">
+                              <option value="Quatre Bornes">
+                              <option value="Triolet">
+                              <option value="Goodlands">
+                              <option value="Centre de Flacq">
+                              <option value="Bel Air">
+                              <option value="Mahebourg">
+                              <option value="Saint Pierre">
+                              <option value="Grand Baie">
+                              <option value="Bambous">
+                              <option value="Le Hochet">
+                              <option value="Terre Rouge">
+                            </datalist>
                           </div>
                         </div>
                       </div>
@@ -78,31 +100,16 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-12">
                         <div class="single-form form-default">
-                          <label>Country</label>
+                          <label>Additional Information</label>
                           <div class="form-input form">
-                            <input type="text" placeholder="Country" />
+                              <asp:TextBox runat="server" TextMode="MultiLine"  rows="3"/>
+                           
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-6">
-                        <div class="select-elements select-style-2 mt-30">
-                          <label>Region/State</label>
-                          <div class="select-items select">
-                            <div class="select-position">
-                              <select style="padding: 0px 15px">
-                                <option value="0">Select</option>
-                                <option value="1">Select option 01</option>
-                                <option value="2">Select option 02</option>
-                                <option value="3">Select option 03</option>
-                                <option value="4">Select option 04</option>
-                                <option value="5">Select option 05</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                     
                       <div class="col-md-12">
                         <div class="single-checkbox checkbox-style-3">
                           <input type="checkbox" id="checkbox-3" />
@@ -176,7 +183,7 @@
                                              </div>
                                            </td>
                                            <td class="checkout-price">
-                                             <p class="price">Rs <%# Eval("product_price") %></p>
+                                             <p class="price">Rs&nbsp<%# Eval("product_price") %></p>
                                            </td>
                                          </tr>
                                   </ItemTemplate>
@@ -195,7 +202,7 @@
                             <p class="value">Total Price:</p>
                               
                               <asp:TextBox runat="server" ID="txtTotal" Visible="false"/>
-                            <p class="price">Rs<asp:Label ID="lblTotalPrice" runat="server"  /></p>
+                            <p class="price">Rs&nbsp<asp:Label ID="lblTotalPrice" runat="server"  /></p>
                           </div>
                         </div>
 
@@ -209,47 +216,7 @@
                   </div>
                 </div>
 
-                <div class="card">
-                  <div class="card-header" id="headingTwo">
-                    <a
-                      href="javascript:void(0)"
-                      class="collapsed"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#collapseTwo"
-                      aria-expanded="false"
-                      aria-controls="collapseTwo"
-                      >Personal Details</a
-                    >
-                  </div>
-                  <div
-                    id="collapseTwo"
-                    class="collapse"
-                    aria-labelledby="headingTwo"
-                    data-parent="#accordionExample"
-                  >
-                    <div class="card-body">
-                      <div class="checkout-sidebar-details">
-                        <div class="single-details">
-                          <p class="info">Jhone Doe</p>
-                          <p class="info">doejhon@email.com</p>
-                          <p class="info">+123 456 789 0234</p>
-                        </div>
-                        <div class="single-details">
-                          <h6 class="title">Mailing Address</h6>
-                          <p class="info">
-                            Company Inc., 8901 Marmora Road, <br />
-                            Glasgow, D04 89GR.
-                          </p>
-                        </div>
-                        <div class="details-btn">
-                          <a href="#" class="main-btn primary-btn-border"
-                            >edit Information</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+               
 
                 
 

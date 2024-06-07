@@ -24,13 +24,13 @@ namespace islandCart.admin
         protected global::System.Web.UI.WebControls.Label HeaderDiscount;
 
         /// <summary>
-        /// txtcode control.
+        /// txtTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtcode;
+        protected global::System.Web.UI.WebControls.TextBox txtTitle;
 
         /// <summary>
         /// rbPercentage control.
@@ -42,13 +42,22 @@ namespace islandCart.admin
         protected global::System.Web.UI.WebControls.RadioButton rbPercentage;
 
         /// <summary>
-        /// rbBuyXGetY control.
+        /// rbBogo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rbBuyXGetY;
+        protected global::System.Web.UI.WebControls.RadioButton rbBogo;
+
+        /// <summary>
+        /// pnlBogo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlBogo;
 
         /// <summary>
         /// TextBox1 control.
@@ -87,22 +96,13 @@ namespace islandCart.admin
         protected global::System.Web.UI.WebControls.TextBox txtPercentage;
 
         /// <summary>
-        /// pnlPurchase control.
+        /// pnlAppliesTo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlPurchase;
-
-        /// <summary>
-        /// txtAmount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAmount;
+        protected global::System.Web.UI.WebControls.Panel pnlAppliesTo;
 
         /// <summary>
         /// rbAll control.

@@ -153,8 +153,8 @@ namespace islandCart.client
                 },
             },
                             Mode = "payment",
-                            SuccessUrl = "https://yourwebsite.com",
-                            CancelUrl = "https://yourwebsite.com",
+                            SuccessUrl = "https://localhost:44390/client/successpayment",
+                            CancelUrl = "https://localhost:44390/client/cancelpayment",
                         };
                         var service = new SessionService();
                         var session = service.Create(options);
@@ -181,5 +181,9 @@ namespace islandCart.client
             
 
         }
+
+
+
+
     }
 }

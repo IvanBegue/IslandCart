@@ -1,11 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin.Master" AutoEventWireup="true" CodeBehind="addflashsale.aspx.cs" Inherits="islandCart.admin.addflashsale" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
     <script>
         function previewImage() {
 
             var fileUpload = document.getElementById("<%= ImgBanner.ClientID %>");
-         var imgPreview1 = document.getElementById("<%= imgPreview1.ClientID %>");
+            var imgPreview1 = document.getElementById("<%= imgPreview1.ClientID %>");
 
             if (fileUpload.files && fileUpload.files[0]) {
                 var reader = new FileReader();
@@ -26,19 +27,32 @@
 
             var rbPercentage = document.getElementById("<%=rbPercentage.ClientID%>");
 
-
-
-
-
-
              var pnlPercentage = document.getElementById("<%=pnlPercentage.ClientID%>");
 
-             var pnlPurchase = document.getElementById("<%=pnlPurchase.ClientID%>");
+
+
+            var pnlBogo = document.getElementById("<%=pnlBogo.ClientID%>");
+
+            var rbBuyXGeyY = document.getElementById("<%=rbBuyXGetY.ClientID%>");
+
+            var pnlAppliesTo = document.getElementById("<%=pnlAppliesTo.ClientID%>");
+
 
 
             pnlPercentage.style.display = rbPercentage.checked ? 'block' : 'none';
 
 
+
+            
+
+
+            if (rbBuyXGeyY.checked) {
+                pnlBogo.style.display = "block";
+                pnlAppliesTo.style.display = "none";
+            } else {
+                pnlBogo.style.display = "none";
+                pnlAppliesTo.style.display = "block";
+            }
         }
 
         function handleCheckBoxClick(checkbox) {
@@ -128,6 +142,39 @@
 
     </script>
    
+    <script>
+        (function ($) {
+            "use strict";
+            $(document).ready(function () {
+                // Initialize DataTables
+                $('#gvs2').DataTable({
+                    paging: true,  // Enable pagination
+                    searching: true,  // Enable search functionality
+                    lengthChange: false,  // Disable the ability to change page length
+                    info: false,  // Disable table information
+                    pageLength: 4,  // Set the default page length
+                    ordering: false,  // Disable sorting
+                    language: {
+                        search: "Search:"  // Customize search input placeholder
+                    },
+                    columnDefs: [
+                        { width: "3px", targets: 0 },  // Set width for the first column
+                        { width: "100px", targets: 1 }, // Set width for the second column
+                        // Add more column width definitions as needed
+                    ],
+                    autoWidth: false  // Disable automatic column width calculation
+                });
+            });
+        }(jQuery));
+    </script>
+
+    <style>
+    .dataTables_filter {
+        float: left !important;
+        text-align: left !important;
+    }
+   
+</style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <ol class="breadcrumb mt-2 mb-3">
@@ -149,8 +196,8 @@
                     </h3>
                     <div class="lorvens-widget">
                         <div class="form-group">
-                            <label>Title </label>
-                            <asp:TextBox runat="server" ID="txtcode" CssClass="form-control" AutoCompleteType="Disabled"></asp:TextBox>
+                            <label>Flashsale Title </label>
+                            <asp:TextBox runat="server" ID="txtTitle" CssClass="form-control" AutoCompleteType="Disabled"></asp:TextBox>
 
                         </div>
 
@@ -173,12 +220,13 @@
                         <div class="form-group row">
                             <div class="col-md-3">
                                 <div class="form-check ">
-                                    <asp:RadioButton runat="server" GroupName="Options" Text="Percentage" ID="rbPercentage" onclick="DisplayPanel()" />
+                                    <asp:RadioButton runat="server" GroupName="Options" Text="&nbsp; Percentage" ID="rbPercentage" onclick="DisplayPanel()" />
                                 </div>
 
                                 <div class="form-check ">
-                                    <asp:RadioButton runat="server" GroupName="Options" Text="Buy X Get Y" ID="rbBuyXGetY" />
+                                    <asp:RadioButton runat="server" GroupName="Options" Text="&nbsp; Buy X Get Y" ID="rbBogo" onclick="DisplayPanel()"/>
                                 </div>
+
                             </div>
 
 
@@ -188,81 +236,43 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="widget-area-2 lorvens-box-shadow">
+        <asp:Panel runat="server" ID="pnlBogo" ClientIDMode="Static" Style="display: none">
+             <div class="row">
+     <div class="col-md-12">
+         <div class="widget-area-2 lorvens-box-shadow">
 
-                    <h3 class="widget-title">
-                        <asp:Label Text="Buy X Get Y Product" runat="server" />
-                    </h3>
+             <h3 class="widget-title">
+                 <asp:Label Text="Buy X Get Y Product" runat="server" />
+             </h3>
 
-                    <div class="lorvens-widget">
-                        <div class="form-group row">
-                            <div class="col-md-5">
-                                <label>Buy X Product</label>
-                                <asp:TextBox runat="server" CssClass="form-control" ID="TextBox1"  />
+             <div class="lorvens-widget">
+                 <div class="form-group row">
+                     <div class="col-md-5">
+                         <label>Buy X Product</label>
+                         <asp:TextBox runat="server" CssClass="form-control" ID="TextBox1"  />
+                         
 
+                         </div>
+                     <div class="col-md-5">
+                         <label>Get Y Product</label>
+                         <asp:TextBox runat="server" CssClass="form-control" ID="TextBox2"  />
+                     </div>
+                     <div class="col-md-2 mt-4">
+                         <button type="button" class="btn btn-primary" >
+                         <i class="ti-search"></i>
+                         </button></div>
 
-                                <div class="lorvens-widget">
-								<!-- Modal Button-->
-								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-									<i class="ti-search"></i>
-								</button>
-								<!-- /Modal Button-->		
-								<!-- Modal Popup-->
-								<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-									<div class="modal-dialog" role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
-											</div>
-											<div class="modal-body">
-												<p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-													Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-												<p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum
-													faucibus dolor auctor.</p>
-												<p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur
-													et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-												<p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-													Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-												<p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum
-													faucibus dolor auctor.</p>
-												<p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur
-													et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-												
-												
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-												<button type="button" class="btn btn-primary">Save changes</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- /Modal Popup-->		
-							</div>
-							<!-- Modal Item-->
+                 </div>
+             </div>
+             
 
 
-                               
+         </div>
+     </div>
 
-                                </div>
-                            <div class="col-md-5">
-                                <label>Get Y Product</label>
-                                <asp:TextBox runat="server" CssClass="form-control" ID="TextBox2"  />
-                            </div>
-                        </div>
-                    </div>
-                    
-
-
-                </div>
-            </div>
-
-        </div>
+ </div>
+        </asp:Panel>
+       
         <asp:Panel runat="server" ID="pnlPercentage" ClientIDMode="Static" Style="display: none">
             <div class="row">
                 <div class="col-md-12">
@@ -290,29 +300,11 @@
             </div>
         </asp:Panel>
 
-        <asp:Panel runat="server" ID="pnlPurchase" ClientIDMode="Static" Style="display: none">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="widget-area-2 lorvens-box-shadow">
-                        <h3 class="widget-title">
-                            <asp:Label Text="Set Minimum Purchase" runat="server" />
-                        </h3>
-                        <div class="lorvens-widget">
-                            <div class="form-group row">
-                                <div class="col-md-3">
-                                    <label>Minimum Purchase</label>
-                                    <asp:TextBox runat="server" CssClass="form-control" ID="txtAmount" Placeholder="0.00" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </asp:Panel>
+        
 
     </div>
     <hr />
-
+    <asp:Panel runat="server" ID="pnlAppliesTo" style="display:none;">
     <div class="container-fluid">
 
         <div class="row">
@@ -404,7 +396,7 @@
                         <div class="lorvens-widget">
                             <div class="form-group row">
                                 <div class="col-md-10">
-                                    <table class="table table-hover">
+                                    <table class="table table-hover" id="gvs2">
                                         <thead>
                                             <tr>
                                                 <th scope="col">Select</th>
@@ -417,7 +409,7 @@
                                                 <ItemTemplate>
                                                     <tr>
 
-                                                        <td style="width: 10px">
+                                                        <td class="col-md-1">
                                                             <asp:CheckBox runat="server" ID="chkProduct" Width="20" onClick="handleCheckBoxClick(this)" ToolTip='<%# Eval("product_id") %>' />
 
                                                         </td>
@@ -445,7 +437,7 @@
         </asp:Panel>
 
     </div>
-
+        </asp:Panel>
     <hr />
 
     <div class="container-fluid">

@@ -1,12 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Admin.Master" AutoEventWireup="true" CodeBehind="listproduct.aspx.cs" Inherits="islandCart.admin.listproduct" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
-       
     .dropdown-toggle::after {
         display: none;
     }
-
-
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -19,7 +16,7 @@
     <li class="breadcrumb-item active">Manage Product</li>
 </ol>
 
-        <div class="container-fluid">
+  <div class="container-fluid">
     <div class="row">
        <div class="col-md-12">
            <div class="widget-area-2 lorvens-box-shadow">

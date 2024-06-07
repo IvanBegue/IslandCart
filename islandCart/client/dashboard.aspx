@@ -165,105 +165,35 @@
                     </div>    <%-- WISHLIST END HERE--%>
                     <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab" tabindex="0">
                         <h3 class="pb-4"><i class="mdi mdi-cart"></i>Orders History </h3>
-                        <div class="row ">
+                        <div class="row">
                             <div class="col-lg-12">
-                                <div class="single-order">
-                                    <h4 class="order-id">Order ID: 1234567890</h4>
-                                    <ul class="order-meta">
-                                        <li><a class="product" href="#0">4 Product</a></li>
-                                        <li><a class="date" href="#0">02/23/2020, 5:00PM</a></li>
-                                    </ul>
-                                    <div class="single-progress-bar-horizontal shipped">
-                                        <div class="progress-text">
-                                            <p>Shipped</p>
-                                        </div>
-                                        <div class="progress-bar-inner">
-                                            <div class="bar-inner">
-                                                <div class="progress-horizontal"></div>
+                                <asp:Repeater runat="server" ID="rptOrder">
+                                    <ItemTemplate>
+                                          <asp:HyperLink runat="server" NavigateUrl='<%# "~/client/orderdetails?q=" + Eval("order_id") %>'>
+                                              
+                                            <div class="single-order" >
+                                                <h4 class="order-id">Order ID:  <%# Eval("order_id") %></h4>
+                                                <ul class="order-meta">
+                                                    <li><a class="product" href="#0"><%# Eval("product_count") %> Product</a></li>
+                                                    <li><a class="date" href="#0"><%# Eval("order_date") %></a></li>
+                                                </ul>
+                                                <div class="single-progress-bar-horizontal <%# Eval("orderStatus") %>">
+                                                    <div class="progress-text">
+                                                        <p class="text-capitalize"><%# Eval("orderStatus") %></p>
+                                                    </div>
+                                                    <div class="progress-bar-inner">
+                                                        <div class="bar-inner">
+                                                            <div class="progress-horizontal"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <span class="order-price">Rs <%# Eval("subtotal") %></span>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <span class="order-price">$144.50</span>
-                                </div>
-                                <div class="single-order">
-                                    <h4 class="order-id">Order ID: 1234567890</h4>
-                                    <ul class="order-meta">
-                                        <li><a class="product" href="#0">4 Product</a></li>
-                                        <li><a class="date" href="#0">02/23/2020, 5:00PM</a></li>
-                                    </ul>
-                                    <div class="single-progress-bar-horizontal ready">
-                                        <div class="progress-text">
-                                            <p>Ready</p>
-                                        </div>
-                                        <div class="progress-bar-inner">
-                                            <div class="bar-inner">
-                                                <div class="progress-horizontal"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="order-price">$144.50</span>
-                                </div>
+                                                
+                                          </asp:HyperLink>
+                                    </ItemTemplate>
+                                </asp:Repeater>
                             </div>
-                            <div class="col-lg-12">
-                                <div class="single-order">
-                                    <h4 class="order-id">Order ID: 1234567890</h4>
-                                    <ul class="order-meta">
-                                        <li><a class="product" href="#0">4 Product</a></li>
-                                        <li><a class="date" href="#0">02/23/2020, 5:00PM</a></li>
-                                    </ul>
-                                    <div class="single-progress-bar-horizontal ordered">
-                                        <div class="progress-text">
-                                            <p>Ordered</p>
-                                        </div>
-                                        <div class="progress-bar-inner">
-                                            <div class="bar-inner">
-                                                <div class="progress-horizontal"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="order-price">$144.50</span>
-                                </div>
-                                <div class="single-order">
-                                    <h4 class="order-id">Order ID: 1234567890</h4>
-                                    <ul class="order-meta">
-                                        <li><a class="product" href="#0">4 Product</a></li>
-                                        <li><a class="date" href="#0">02/23/2020, 5:00PM</a></li>
-                                    </ul>
-                                    <div class="single-progress-bar-horizontal delivered">
-                                        <div class="progress-text">
-                                            <p>Delivered</p>
-                                        </div>
-                                        <div class="progress-bar-inner">
-                                            <div class="bar-inner">
-                                                <div class="progress-horizontal"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="order-price">$144.50</span>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="single-order">
-                                    <h4 class="order-id">Order ID: 1234567890</h4>
-                                    <ul class="order-meta">
-                                        <li><a class="product" href="#0">4 Product</a></li>
-                                        <li><a class="date" href="#0">02/23/2020, 5:00PM</a></li>
-                                    </ul>
-                                    <div class="single-progress-bar-horizontal delivered">
-                                        <div class="progress-text">
-                                            <p>Delivered</p>
-                                        </div>
-                                        <div class="progress-bar-inner">
-                                            <div class="bar-inner">
-                                                <div class="progress-horizontal"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="order-price">$144.50</span>
-                                </div>
-                            </div>
-
-
                         </div>
                     </div>
                 </div>

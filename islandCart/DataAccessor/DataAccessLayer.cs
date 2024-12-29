@@ -14,7 +14,7 @@ namespace islandCart.DataAccessor
 
         public DataAccessLayer()
         {
-            _conString = WebConfigurationManager.ConnectionStrings["islandCartDB"].ConnectionString; 
+            _conString = WebConfigurationManager.ConnectionStrings["*****"].ConnectionString; //DB NAME GOES HERE
         }
 
         public SqlDataReader GetQuery(string query, out SqlConnection con)
